@@ -79,25 +79,25 @@ describe("platformWallet basic test", function () {
   });
 
   describe("sign off chain check to transfer erc20_1", function () {
-    this.beforeEach(async function () {
+    this.beforeAll(async function () {
       // transfer 10k erc20_1 to multiSigWallet
       await erc20_1
         .connect(erc20Creator)
         .transfer(multiSigWallet.address, 10000);
 
-      const tokenAmount = await erc20_1.balanceOf(multiSigWallet.address);
     });
 
     it("verify multiSigWallet erc20_1 balance", async function () {
       const tokenAmount = await erc20_1.balanceOf(multiSigWallet.address);
-      console.log({ tokenAmount });
 
       expect(tokenAmount).to.equal(10000);
     });
 
     it("use offChain check to transfer erc20_1", async function () {
       const checkOwner = accepter.address;
-      const to = accepter.address;
+      const accepterAddress = accepter.address;
+      // external contract address to be called
+      const to = erc20_1.address;
       const value = 0;
       const amount = 4000;
       const decimal = 18;
@@ -112,8 +112,9 @@ describe("platformWallet basic test", function () {
       //   construct call data of inline assembly
       let ABI = ["function transfer(address to, uint256 amount)"];
       let iface = new ethers.utils.Interface(ABI);
-      const data = iface.encodeFunctionData("transfer", [to, amount * decimal]);
+      const data = iface.encodeFunctionData("transfer", [accepterAddress, amount ]);
 
+      
       const checkNonce = await checkNonceGenerator({
         checkOwner: checkOwner,
         to: to,
@@ -124,11 +125,7 @@ describe("platformWallet basic test", function () {
       // construct msgHash which is to be signed by owners of multiSigWallet
 
       const { msgHash } = await signERC20TransferCheck({
-        signer: owner1,
-        erc20Address: erc20_1.address,
-        amount: amount,
-        decimal: decimal,
-        to: to,
+        to: erc20_1.address,
         checkOwner: checkOwner,
         checkNonce: checkNonce,
         data: data,
@@ -136,26 +133,18 @@ describe("platformWallet basic test", function () {
         chainId: hre.network.config.chainId,
       });
 
-      console.log({ msgHash });
-      console.log(owner1.address, await multiSigWallet.isOwner(owner1.address));
-      console.log(owner2.address, await multiSigWallet.isOwner(owner2.address));
-      console.log(owner3.address, await multiSigWallet.isOwner(owner3.address));
-
       var signerLs: Array<Wallet> = [owner1, owner2, owner3];
       signerLs = addressSorter(signerLs);
 
       var compactSigLs: Array<string> = [];
       for (const signer of signerLs) {
         // The signature format is a compact form of:
-        //   {bytes32 r}{bytes32 s}{uint8 v}
+        // {bytes32 r}{bytes32 s}{uint8 v}
         // Compact means, uint8 is not padded to 32 bytes.
-        let compactSig = await signer.signMessage(msgHash);
-
-        console.log(
-          signer.address,
-          ethers.utils.splitSignature(compactSig),
-          "\n"
-        );
+        var compactSig = await signer.signMessage(msgHash);
+    
+        
+        compactSig = compactSig.slice(0,compactSig.length-2) +( compactSig.slice(compactSig.length-2,compactSig.length)=='1b' ? '1f' :'20')
         compactSigLs.push(compactSig);
       }
 
@@ -171,7 +160,7 @@ describe("platformWallet basic test", function () {
         ],
         [
           {
-            to: to,
+            to: erc20_1.address,
             checkOwner: checkOwner,
             value: value,
             data: data,
@@ -202,12 +191,14 @@ describe("platformWallet basic test", function () {
       //     signatures: aggregatedSig,
       //   });
       //   console.log(BigNumber.from(checkNonce));
+
       const res = await multiSigWallet.connect(accepter).executeCheck(checkMsg);
 
-      //   const newBalanceOfTo = await erc20_1.balanceOf(to);
-      //   const newBalanceOfMultiSigWallet = await erc20_1.balanceOf(to);
-      //   expect(newBalanceOfTo).to.equal(4000);
-      //   expect(newBalanceOfMultiSigWallet).to.equal(6000);
+      const newBalanceOfTo = await erc20_1.balanceOf(accepterAddress);
+      const newBalanceOfMultiSigWallet = await erc20_1.balanceOf(multiSigWallet.address);
+
+      expect(newBalanceOfTo).to.equal(4000);
+      expect(newBalanceOfMultiSigWallet).to.equal(6000);
     });
   });
 });

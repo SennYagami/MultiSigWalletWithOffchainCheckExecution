@@ -255,9 +255,9 @@ contract GnosisSafe is
         uint256 i;
         for (i = 0; i < requiredSignatures; i++) {
             (v, r, s) = signatureSplit(signatures, i);
-            console.logUint(v);
-            console.logBytes32(r);
-            console.logBytes32(s);
+            // console.logUint(v);
+            // console.logBytes32(r);
+            // console.logBytes32(s);
 
             if (v == 0) {
                 // If v is 0 then it is a contract signature
@@ -298,19 +298,15 @@ contract GnosisSafe is
                 // If v > 30 then default va (27,28) has been adjusted for eth_sign flow
                 // To support eth_sign and similar we adjust v and hash the messageHash with the Ethereum message prefix before applying ecrecover
                 currentOwner = ecrecover(keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", dataHash)), v - 4, r, s);
+                // console.logString("dataHash");
+                // console.logBytes32(dataHash);
+                // console.logString("currentOwner");
+                // console.logAddress(currentOwner);
             } else {
                 // Default is the ecrecover flow with the provided data hash
                 // Use ecrecover with the messageHash for EOA signatures
                 currentOwner = ecrecover(dataHash, v, r, s);
-                console.logString("dataHash");
-                console.logBytes32(dataHash);
-                console.logString("currentOwner");
-                console.logAddress(currentOwner);
             }
-            // console.logAddress(currentOwner);
-            // console.logAddress(lastOwner);
-            // console.logAddress(owners[currentOwner]);
-            // console.logAddress(SENTINEL_OWNERS);
 
             require(currentOwner > lastOwner && owners[currentOwner] != address(0) && currentOwner != SENTINEL_OWNERS, "GS026");
             lastOwner = currentOwner;

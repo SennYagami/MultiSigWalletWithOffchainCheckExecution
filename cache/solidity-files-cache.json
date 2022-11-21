@@ -1,9 +1,192 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/senn/workspace/bc/safe-contracts/contracts/GnosisSafe.sol": {
-      "lastModificationDate": 1669024564875,
-      "contentHash": "8233bcfc86f17130dc021559357c7679",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\accessors\\SimulateTxAccessor.sol": {
+      "lastModificationDate": 1669034062815,
+      "contentHash": "11dd81991b51623bdcbf7b59f4b43f8d",
+      "sourceName": "contracts/accessors/SimulateTxAccessor.sol",
+      "solcConfig": {
+        "version": "0.8.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../base/Executor.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "SimulateTxAccessor"
+      ]
+    },
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\base\\Executor.sol": {
+      "lastModificationDate": 1669034062815,
+      "contentHash": "e33d05d559134372f038a8e520c0ed2c",
+      "sourceName": "contracts/base/Executor.sol",
+      "solcConfig": {
+        "version": "0.8.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../common/Enum.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "Executor"
+      ]
+    },
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\common\\Enum.sol": {
+      "lastModificationDate": 1669034062817,
+      "contentHash": "7fcec41e34db869a1aee9eaf8c06cce6",
+      "sourceName": "contracts/common/Enum.sol",
+      "solcConfig": {
+        "version": "0.8.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "Enum"
+      ]
+    },
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\base\\ModuleManager.sol": {
+      "lastModificationDate": 1669034062816,
+      "contentHash": "8e92c680035d26be3401162c42b24fb4",
+      "sourceName": "contracts/base/ModuleManager.sol",
+      "solcConfig": {
+        "version": "0.8.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../common/Enum.sol",
+        "../common/SelfAuthorized.sol",
+        "./Executor.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "ModuleManager"
+      ]
+    },
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\common\\SelfAuthorized.sol": {
+      "lastModificationDate": 1669034062818,
+      "contentHash": "e15becc27524b81b7ff990ffe0c96762",
+      "sourceName": "contracts/common/SelfAuthorized.sol",
+      "solcConfig": {
+        "version": "0.8.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "SelfAuthorized"
+      ]
+    },
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\GnosisSafe.sol": {
+      "lastModificationDate": 1669040825937,
+      "contentHash": "cf3e2e201d2dc991e031fb6a05f5ab50",
       "sourceName": "contracts/GnosisSafe.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -49,48 +232,9 @@
         "GnosisSafe"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/base/ModuleManager.sol": {
-      "lastModificationDate": 1668816035925,
-      "contentHash": "90b2541c32a7644991f6ec3510dc3776",
-      "sourceName": "contracts/base/ModuleManager.sol",
-      "solcConfig": {
-        "version": "0.8.1",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../common/Enum.sol",
-        "../common/SelfAuthorized.sol",
-        "./Executor.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.0 <0.9.0"
-      ],
-      "artifacts": [
-        "ModuleManager"
-      ]
-    },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/base/OwnerManager.sol": {
-      "lastModificationDate": 1668816035925,
-      "contentHash": "53e497cc090cb4931ca5905d7f671cc5",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\base\\OwnerManager.sol": {
+      "lastModificationDate": 1669034062817,
+      "contentHash": "aef05aaa7c78227c33973858207c2136",
       "sourceName": "contracts/base/OwnerManager.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -125,9 +269,9 @@
         "OwnerManager"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/base/FallbackManager.sol": {
-      "lastModificationDate": 1668816035924,
-      "contentHash": "3247316e45ba683ad526769217c7ab66",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\base\\FallbackManager.sol": {
+      "lastModificationDate": 1669034062816,
+      "contentHash": "fcdfd4ec3d734630b80097c5c73d27b4",
       "sourceName": "contracts/base/FallbackManager.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -162,9 +306,9 @@
         "FallbackManager"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/base/GuardManager.sol": {
-      "lastModificationDate": 1668816035924,
-      "contentHash": "40079831763d0f051f998279669ea5a9",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\base\\GuardManager.sol": {
+      "lastModificationDate": 1669034062816,
+      "contentHash": "b4fb61584c0b609100e9bcceb6662098",
       "sourceName": "contracts/base/GuardManager.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -203,9 +347,9 @@
         "GuardManager"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/common/EtherPaymentFallback.sol": {
-      "lastModificationDate": 1668816035925,
-      "contentHash": "566ab89634daf8e542177b1e7016971e",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\common\\EtherPaymentFallback.sol": {
+      "lastModificationDate": 1669034062817,
+      "contentHash": "79325a67fdfb9eb0d77160fb42fc9c41",
       "sourceName": "contracts/common/EtherPaymentFallback.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -238,9 +382,9 @@
         "EtherPaymentFallback"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/common/Singleton.sol": {
-      "lastModificationDate": 1668816035926,
-      "contentHash": "334ef119459ae9a5487c6bd346752778",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\common\\Singleton.sol": {
+      "lastModificationDate": 1669034062818,
+      "contentHash": "67a9324b377158d33dd1ce94c5e723e6",
       "sourceName": "contracts/common/Singleton.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -273,9 +417,9 @@
         "Singleton"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/common/SignatureDecoder.sol": {
-      "lastModificationDate": 1668816035926,
-      "contentHash": "2284c5df4444ca9b2cf4a38a45d85650",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\common\\SignatureDecoder.sol": {
+      "lastModificationDate": 1669034062818,
+      "contentHash": "671a928171f6a5b4be90a7bcdddab88a",
       "sourceName": "contracts/common/SignatureDecoder.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -308,9 +452,9 @@
         "SignatureDecoder"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/common/SecuredTokenTransfer.sol": {
-      "lastModificationDate": 1668816035925,
-      "contentHash": "80c88034d9e09f88f6853fc707cf03c6",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\common\\SecuredTokenTransfer.sol": {
+      "lastModificationDate": 1669034062818,
+      "contentHash": "10238a40f5effbdbcce6696e961d7599",
       "sourceName": "contracts/common/SecuredTokenTransfer.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -343,9 +487,9 @@
         "SecuredTokenTransfer"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/common/StorageAccessible.sol": {
-      "lastModificationDate": 1668816035926,
-      "contentHash": "6fa2dc51af34831e6b0fff6197165ed0",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\common\\StorageAccessible.sol": {
+      "lastModificationDate": 1669034062819,
+      "contentHash": "4e9c5822018ec9d9dc813beae85b557a",
       "sourceName": "contracts/common/StorageAccessible.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -378,9 +522,9 @@
         "StorageAccessible"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/interfaces/ISignatureValidator.sol": {
-      "lastModificationDate": 1668816035929,
-      "contentHash": "45be433b79d00dd9f3b8047489c3ff80",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\interfaces\\ISignatureValidator.sol": {
+      "lastModificationDate": 1669034062823,
+      "contentHash": "761908f21a6e0e449c586015c1b74668",
       "sourceName": "contracts/interfaces/ISignatureValidator.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -414,9 +558,9 @@
         "ISignatureValidatorConstants"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/external/GnosisSafeMath.sol": {
-      "lastModificationDate": 1668816035927,
-      "contentHash": "0b98e5ff6cd364731017082744cf5706",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\external\\GnosisSafeMath.sol": {
+      "lastModificationDate": 1669034062821,
+      "contentHash": "30f28d0f5fe0c7ce729d3fd6e6c84555",
       "sourceName": "contracts/external/GnosisSafeMath.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -449,10 +593,10 @@
         "GnosisSafeMath"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/common/Enum.sol": {
-      "lastModificationDate": 1668816035925,
-      "contentHash": "70d93d6b3e8b23f419fe3e529a43c17e",
-      "sourceName": "contracts/common/Enum.sol",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\node_modules\\_hardhat@2.12.2@hardhat\\console.sol": {
+      "lastModificationDate": 1669034108717,
+      "contentHash": "4ff3cd2f6272c9a6516e9ee4f2b967d3",
+      "sourceName": "hardhat/console.sol",
       "solcConfig": {
         "version": "0.8.1",
         "settings": {
@@ -478,87 +622,15 @@
       },
       "imports": [],
       "versionPragmas": [
-        ">=0.7.0 <0.9.0"
+        ">= 0.4.22 <0.9.0"
       ],
       "artifacts": [
-        "Enum"
+        "console"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/common/SelfAuthorized.sol": {
-      "lastModificationDate": 1668816035926,
-      "contentHash": "4c773e803298d5521ba60d7fc06df0b3",
-      "sourceName": "contracts/common/SelfAuthorized.sol",
-      "solcConfig": {
-        "version": "0.8.1",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.7.0 <0.9.0"
-      ],
-      "artifacts": [
-        "SelfAuthorized"
-      ]
-    },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/base/Executor.sol": {
-      "lastModificationDate": 1668816035924,
-      "contentHash": "5d439865306475654cf018596f1b1061",
-      "sourceName": "contracts/base/Executor.sol",
-      "solcConfig": {
-        "version": "0.8.1",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../common/Enum.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.0 <0.9.0"
-      ],
-      "artifacts": [
-        "Executor"
-      ]
-    },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/interfaces/IERC165.sol": {
-      "lastModificationDate": 1668816035928,
-      "contentHash": "2d418698dff7323e4f199ff8633d1a3a",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\interfaces\\IERC165.sol": {
+      "lastModificationDate": 1669034062823,
+      "contentHash": "7470a568a5f6f7b34375132d07414e53",
       "sourceName": "contracts/interfaces/IERC165.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -591,10 +663,10 @@
         "IERC165"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/libraries/SignMessageLib.sol": {
-      "lastModificationDate": 1668816035930,
-      "contentHash": "dba0ccb1d62a9e2bcfd354eeb22a505d",
-      "sourceName": "contracts/libraries/SignMessageLib.sol",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\MultiSigWallet.sol": {
+      "lastModificationDate": 1669041364067,
+      "contentHash": "573bae10f522f3fced7d96ad87839970",
+      "sourceName": "contracts/MultiSigWallet.sol",
       "solcConfig": {
         "version": "0.8.1",
         "settings": {
@@ -619,20 +691,59 @@
         }
       },
       "imports": [
-        "./GnosisSafeStorage.sol",
-        "../GnosisSafe.sol"
+        "./GnosisSafe.sol",
+        "./external/GnosisSafeMath.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.0 <0.9.0"
+      ],
+      "artifacts": [
+        "MultiSigWallet"
+      ]
+    },
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\test\\ERC1155Token.sol": {
+      "lastModificationDate": 1669034062827,
+      "contentHash": "f27dc968791fa3a4ba02a01a8cbf129d",
+      "sourceName": "contracts/test/ERC1155Token.sol",
+      "solcConfig": {
+        "version": "0.8.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/ERC1155TokenReceiver.sol",
+        "../external/GnosisSafeMath.sol"
       ],
       "versionPragmas": [
         ">=0.7.0 <0.9.0"
       ],
       "artifacts": [
-        "SignMessageLib"
+        "ERC1155Token"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/libraries/GnosisSafeStorage.sol": {
-      "lastModificationDate": 1668816035929,
-      "contentHash": "9e010520759c9b177c06c9654c3169a1",
-      "sourceName": "contracts/libraries/GnosisSafeStorage.sol",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\interfaces\\ERC1155TokenReceiver.sol": {
+      "lastModificationDate": 1669034062822,
+      "contentHash": "e736ad5531266344630e6075bbe806d4",
+      "sourceName": "contracts/interfaces/ERC1155TokenReceiver.sol",
       "solcConfig": {
         "version": "0.8.1",
         "settings": {
@@ -661,88 +772,12 @@
         ">=0.7.0 <0.9.0"
       ],
       "artifacts": [
-        "GnosisSafeStorage"
+        "ERC1155TokenReceiver"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/examples/libraries/Migrate_1_3_0_to_1_2_0.sol": {
-      "lastModificationDate": 1668816035927,
-      "contentHash": "71f74e4918d7f3b42f05c52f96143bb7",
-      "sourceName": "contracts/examples/libraries/Migrate_1_3_0_to_1_2_0.sol",
-      "solcConfig": {
-        "version": "0.8.1",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../../libraries/GnosisSafeStorage.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.0 <0.9.0"
-      ],
-      "artifacts": [
-        "Migration"
-      ]
-    },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/handler/CompatibilityFallbackHandler.sol": {
-      "lastModificationDate": 1668816035927,
-      "contentHash": "c7ac8892ecd70b5f7a63ed5f3a1bc4ef",
-      "sourceName": "contracts/handler/CompatibilityFallbackHandler.sol",
-      "solcConfig": {
-        "version": "0.8.1",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./DefaultCallbackHandler.sol",
-        "../interfaces/ISignatureValidator.sol",
-        "../GnosisSafe.sol"
-      ],
-      "versionPragmas": [
-        ">=0.7.0 <0.9.0"
-      ],
-      "artifacts": [
-        "CompatibilityFallbackHandler"
-      ]
-    },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/handler/DefaultCallbackHandler.sol": {
-      "lastModificationDate": 1668816035927,
-      "contentHash": "5a4fbd56521d514530c7f6206e8eca89",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\handler\\DefaultCallbackHandler.sol": {
+      "lastModificationDate": 1669034062822,
+      "contentHash": "5598b0d0626d41cf641337c2cbacb66a",
       "sourceName": "contracts/handler/DefaultCallbackHandler.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -780,44 +815,9 @@
         "DefaultCallbackHandler"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/interfaces/ERC1155TokenReceiver.sol": {
-      "lastModificationDate": 1668816035928,
-      "contentHash": "1d63defb083613ac870a97490f3635ba",
-      "sourceName": "contracts/interfaces/ERC1155TokenReceiver.sol",
-      "solcConfig": {
-        "version": "0.8.1",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.7.0 <0.9.0"
-      ],
-      "artifacts": [
-        "ERC1155TokenReceiver"
-      ]
-    },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/interfaces/ERC721TokenReceiver.sol": {
-      "lastModificationDate": 1668816035928,
-      "contentHash": "ffac82dd785c225e65d296c1c6596d5a",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\interfaces\\ERC721TokenReceiver.sol": {
+      "lastModificationDate": 1669034062822,
+      "contentHash": "29198f8e7100ddf8be94f076647cd6be",
       "sourceName": "contracts/interfaces/ERC721TokenReceiver.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -850,9 +850,9 @@
         "ERC721TokenReceiver"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/interfaces/ERC777TokensRecipient.sol": {
-      "lastModificationDate": 1668816035928,
-      "contentHash": "38601f7aa7b8c19d689915aeda071ef0",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\interfaces\\ERC777TokensRecipient.sol": {
+      "lastModificationDate": 1669034062823,
+      "contentHash": "f6b4e6d569b65123dbc450a505eb0b9d",
       "sourceName": "contracts/interfaces/ERC777TokensRecipient.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -885,9 +885,9 @@
         "ERC777TokensRecipient"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/examples/guards/ReentrancyTransactionGuard.sol": {
-      "lastModificationDate": 1668816035927,
-      "contentHash": "485dee02cfc88f89548b7920b7664fba",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\examples\\guards\\ReentrancyTransactionGuard.sol": {
+      "lastModificationDate": 1669034062820,
+      "contentHash": "45327aa090ccfaa75c4ada4aa1575dba",
       "sourceName": "contracts/examples/guards/ReentrancyTransactionGuard.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -924,9 +924,9 @@
         "ReentrancyTransactionGuard"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/examples/guards/DelegateCallTransactionGuard.sol": {
-      "lastModificationDate": 1668816035926,
-      "contentHash": "8eb1cc3d5ccab8c4b7042e28b36c831f",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\examples\\guards\\DelegateCallTransactionGuard.sol": {
+      "lastModificationDate": 1669034062820,
+      "contentHash": "f62e605cda37ecc304d5a51e53259604",
       "sourceName": "contracts/examples/guards/DelegateCallTransactionGuard.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -963,9 +963,9 @@
         "DelegateCallTransactionGuard"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/examples/guards/DebugTransactionGuard.sol": {
-      "lastModificationDate": 1668816035926,
-      "contentHash": "2029954056fe52fea83f7bcd007a686b",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\examples\\guards\\DebugTransactionGuard.sol": {
+      "lastModificationDate": 1669034062819,
+      "contentHash": "10aaee78ee3c3cfdac02c85e52938662",
       "sourceName": "contracts/examples/guards/DebugTransactionGuard.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -1002,10 +1002,10 @@
         "DebugTransactionGuard"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/accessors/SimulateTxAccessor.sol": {
-      "lastModificationDate": 1668816035924,
-      "contentHash": "54a9a2ed1655e1b79bfc6651f2e3c032",
-      "sourceName": "contracts/accessors/SimulateTxAccessor.sol",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\handler\\CompatibilityFallbackHandler.sol": {
+      "lastModificationDate": 1669034062821,
+      "contentHash": "2c8415462d3759f79f000a8c0e95f7e7",
+      "sourceName": "contracts/handler/CompatibilityFallbackHandler.sol",
       "solcConfig": {
         "version": "0.8.1",
         "settings": {
@@ -1030,19 +1030,21 @@
         }
       },
       "imports": [
-        "../base/Executor.sol"
+        "./DefaultCallbackHandler.sol",
+        "../interfaces/ISignatureValidator.sol",
+        "../GnosisSafe.sol"
       ],
       "versionPragmas": [
         ">=0.7.0 <0.9.0"
       ],
       "artifacts": [
-        "SimulateTxAccessor"
+        "CompatibilityFallbackHandler"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/test/ERC1155Token.sol": {
-      "lastModificationDate": 1668816035931,
-      "contentHash": "ab71494dc9c4c081d1b731d67d1c07de",
-      "sourceName": "contracts/test/ERC1155Token.sol",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\libraries\\SignMessageLib.sol": {
+      "lastModificationDate": 1669034062825,
+      "contentHash": "5d0c19660815de88240352744c4b560a",
+      "sourceName": "contracts/libraries/SignMessageLib.sol",
       "solcConfig": {
         "version": "0.8.1",
         "settings": {
@@ -1067,19 +1069,91 @@
         }
       },
       "imports": [
-        "../interfaces/ERC1155TokenReceiver.sol",
-        "../external/GnosisSafeMath.sol"
+        "./GnosisSafeStorage.sol",
+        "../GnosisSafe.sol"
       ],
       "versionPragmas": [
         ">=0.7.0 <0.9.0"
       ],
       "artifacts": [
-        "ERC1155Token"
+        "SignMessageLib"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/GnosisSafeL2.sol": {
-      "lastModificationDate": 1668816035924,
-      "contentHash": "b7617493b9f2a136251658cc880640e9",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\libraries\\GnosisSafeStorage.sol": {
+      "lastModificationDate": 1669034062824,
+      "contentHash": "81168390989867c5430133c41bd879c0",
+      "sourceName": "contracts/libraries/GnosisSafeStorage.sol",
+      "solcConfig": {
+        "version": "0.8.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "GnosisSafeStorage"
+      ]
+    },
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\examples\\libraries\\Migrate_1_3_0_to_1_2_0.sol": {
+      "lastModificationDate": 1669034062820,
+      "contentHash": "78d7960bbe6fc75acf7773da50e55d6e",
+      "sourceName": "contracts/examples/libraries/Migrate_1_3_0_to_1_2_0.sol",
+      "solcConfig": {
+        "version": "0.8.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../libraries/GnosisSafeStorage.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "Migration"
+      ]
+    },
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\GnosisSafeL2.sol": {
+      "lastModificationDate": 1669034062814,
+      "contentHash": "8ae8a268c7033807aa4e3b65fd3c408e",
       "sourceName": "contracts/GnosisSafeL2.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -1114,9 +1188,9 @@
         "GnosisSafeL2"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/handler/HandlerContext.sol": {
-      "lastModificationDate": 1668816035928,
-      "contentHash": "600738543f914c11e793b0fef5e705c8",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\handler\\HandlerContext.sol": {
+      "lastModificationDate": 1669034062822,
+      "contentHash": "5dfcaf539ddc5d76a111da4d54896c65",
       "sourceName": "contracts/handler/HandlerContext.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -1149,9 +1223,9 @@
         "HandlerContext"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/test/TestHandler.sol": {
-      "lastModificationDate": 1668816035931,
-      "contentHash": "b69208087c530257ebe2fc6832af3397",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\test\\TestHandler.sol": {
+      "lastModificationDate": 1669034062828,
+      "contentHash": "b6e3c8c7a8accf6845fe60c1a3f61a51",
       "sourceName": "contracts/test/TestHandler.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -1186,9 +1260,9 @@
         "TestHandler"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/libraries/CreateCall.sol": {
-      "lastModificationDate": 1668816035929,
-      "contentHash": "5b39e17ce475af78bc0a7cbdc1472c32",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\libraries\\CreateCall.sol": {
+      "lastModificationDate": 1669034062824,
+      "contentHash": "4a61b926720ce99e434e37d00e90d9fe",
       "sourceName": "contracts/libraries/CreateCall.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -1221,9 +1295,9 @@
         "CreateCall"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/libraries/MultiSend.sol": {
-      "lastModificationDate": 1668816035930,
-      "contentHash": "a7b41ac2932ddd3c1d11c7076ace270d",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\libraries\\MultiSend.sol": {
+      "lastModificationDate": 1669034062825,
+      "contentHash": "a7e38ff41cf6e16a90024e8c1589d035",
       "sourceName": "contracts/libraries/MultiSend.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -1256,9 +1330,9 @@
         "MultiSend"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/libraries/MultiSendCallOnly.sol": {
-      "lastModificationDate": 1668816035930,
-      "contentHash": "121202ac209e67a2a6f0cb22f0133a0a",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\libraries\\MultiSendCallOnly.sol": {
+      "lastModificationDate": 1669034062825,
+      "contentHash": "eaf68ca1a3b31d04ebd0a32a972c3cad",
       "sourceName": "contracts/libraries/MultiSendCallOnly.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -1291,9 +1365,9 @@
         "MultiSendCallOnly"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/proxies/GnosisSafeProxy.sol": {
-      "lastModificationDate": 1668816035930,
-      "contentHash": "eba113f6899fe142a2081f63aded8c83",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\proxies\\GnosisSafeProxy.sol": {
+      "lastModificationDate": 1669034062826,
+      "contentHash": "26c3750e07c0e132651ba51dc41d82f8",
       "sourceName": "contracts/proxies/GnosisSafeProxy.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -1327,9 +1401,9 @@
         "IProxy"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/proxies/IProxyCreationCallback.sol": {
-      "lastModificationDate": 1668816035931,
-      "contentHash": "e73c0b8a985873c817469f5c6038e233",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\proxies\\IProxyCreationCallback.sol": {
+      "lastModificationDate": 1669034062827,
+      "contentHash": "b0b87e2ab8ba956bf521b49a980c8f3e",
       "sourceName": "contracts/proxies/IProxyCreationCallback.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -1364,9 +1438,9 @@
         "IProxyCreationCallback"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/proxies/GnosisSafeProxyFactory.sol": {
-      "lastModificationDate": 1668816035930,
-      "contentHash": "68e356db0b371d087168fef106757980",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\proxies\\GnosisSafeProxyFactory.sol": {
+      "lastModificationDate": 1669034062826,
+      "contentHash": "94021f77c267a0d2c35e3abf8e4acb35",
       "sourceName": "contracts/proxies/GnosisSafeProxyFactory.sol",
       "solcConfig": {
         "version": "0.8.1",
@@ -1402,9 +1476,9 @@
         "GnosisSafeProxyFactory"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/interfaces/ViewStorageAccessible.sol": {
-      "lastModificationDate": 1668996504127,
-      "contentHash": "37eefaaae55281b6b8ef1a856078b00c",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\interfaces\\ViewStorageAccessible.sol": {
+      "lastModificationDate": 1669034062824,
+      "contentHash": "a726027d574963575685f708a0733fa1",
       "sourceName": "contracts/interfaces/ViewStorageAccessible.sol",
       "solcConfig": {
         "version": "0.5.17",
@@ -1437,9 +1511,9 @@
         "ViewStorageAccessible"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/test/ERC20Token.sol": {
-      "lastModificationDate": 1668996502511,
-      "contentHash": "d696ead3d7cae3917e9961513be18079",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\test\\ERC20Token.sol": {
+      "lastModificationDate": 1669034062827,
+      "contentHash": "dc632c78e78592ce57d28e2c7fe05a4b",
       "sourceName": "contracts/test/ERC20Token.sol",
       "solcConfig": {
         "version": "0.6.12",
@@ -1474,8 +1548,8 @@
         "ERC20Token"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/node_modules/_@openzeppelin_contracts@3.4.0@@openzeppelin/contracts/token/ERC20/ERC20.sol": {
-      "lastModificationDate": 1668996694434,
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\node_modules\\_@openzeppelin_contracts@3.4.2@@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol": {
+      "lastModificationDate": 1669034106908,
       "contentHash": "8065b340476f61365c076897199425f1",
       "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
       "solcConfig": {
@@ -1513,8 +1587,8 @@
         "ERC20"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/node_modules/_@openzeppelin_contracts@3.4.0@@openzeppelin/contracts/utils/Context.sol": {
-      "lastModificationDate": 1668996694430,
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\node_modules\\_@openzeppelin_contracts@3.4.2@@openzeppelin\\contracts\\utils\\Context.sol": {
+      "lastModificationDate": 1669034106531,
       "contentHash": "2adbd82f6d055a4751566d4671512b03",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
@@ -1548,8 +1622,8 @@
         "Context"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/node_modules/_@openzeppelin_contracts@3.4.0@@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1668996694441,
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\node_modules\\_@openzeppelin_contracts@3.4.2@@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
+      "lastModificationDate": 1669034107873,
       "contentHash": "e0a41531d159d3a32f84b7a3ecf9fabb",
       "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
@@ -1583,8 +1657,8 @@
         "IERC20"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/node_modules/_@openzeppelin_contracts@3.4.0@@openzeppelin/contracts/math/SafeMath.sol": {
-      "lastModificationDate": 1668996694448,
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\node_modules\\_@openzeppelin_contracts@3.4.2@@openzeppelin\\contracts\\math\\SafeMath.sol": {
+      "lastModificationDate": 1669034108087,
       "contentHash": "e03e12206057e809eb76c5f681170c32",
       "sourceName": "@openzeppelin/contracts/math/SafeMath.sol",
       "solcConfig": {
@@ -1618,9 +1692,9 @@
         "SafeMath"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/test/Token.sol": {
-      "lastModificationDate": 1668816035931,
-      "contentHash": "1a836e35f25b5167e4789431bf7029e7",
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\contracts\\test\\Token.sol": {
+      "lastModificationDate": 1669034062828,
+      "contentHash": "bc52e6285eb2f68af0ab4355eafa8568",
       "sourceName": "contracts/test/Token.sol",
       "solcConfig": {
         "version": "0.6.12",
@@ -1655,8 +1729,8 @@
         "Token"
       ]
     },
-    "/Users/senn/workspace/bc/safe-contracts/node_modules/_@gnosis.pm_mock-contract@4.0.0@@gnosis.pm/mock-contract/contracts/MockContract.sol": {
-      "lastModificationDate": 1668996442079,
+    "D:\\workspace\\bc\\MultiSigWalletWithOffchainCheckExecution\\node_modules\\_@gnosis.pm_mock-contract@4.0.0@@gnosis.pm\\mock-contract\\contracts\\MockContract.sol": {
+      "lastModificationDate": 1669034105243,
       "contentHash": "ba9f7426045603ac5064e0476844d446",
       "sourceName": "@gnosis.pm/mock-contract/contracts/MockContract.sol",
       "solcConfig": {
@@ -1689,80 +1763,6 @@
       "artifacts": [
         "MockContract",
         "MockInterface"
-      ]
-    },
-    "/Users/senn/workspace/bc/safe-contracts/contracts/MultiSigWallet.sol": {
-      "lastModificationDate": 1669023323501,
-      "contentHash": "be3675fe13c95977ff724c084297401b",
-      "sourceName": "contracts/MultiSigWallet.sol",
-      "solcConfig": {
-        "version": "0.8.1",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./GnosisSafe.sol",
-        "./external/GnosisSafeMath.sol",
-        "hardhat/console.sol"
-      ],
-      "versionPragmas": [
-        ">=0.8.0 <0.9.0"
-      ],
-      "artifacts": [
-        "MultiSigWallet"
-      ]
-    },
-    "/Users/senn/workspace/bc/safe-contracts/node_modules/_hardhat@2.12.2@hardhat/console.sol": {
-      "lastModificationDate": 1669002045145,
-      "contentHash": "4ff3cd2f6272c9a6516e9ee4f2b967d3",
-      "sourceName": "hardhat/console.sol",
-      "solcConfig": {
-        "version": "0.8.1",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">= 0.4.22 <0.9.0"
-      ],
-      "artifacts": [
-        "console"
       ]
     }
   }

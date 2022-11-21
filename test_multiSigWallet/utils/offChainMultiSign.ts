@@ -7,10 +7,6 @@ import crypto from "crypto";
 import hre from "hardhat";
 
 export async function signERC20TransferCheck({
-  signer,
-  erc20Address,
-  amount,
-  decimal,
   to,
   checkOwner,
   checkNonce,
@@ -18,10 +14,6 @@ export async function signERC20TransferCheck({
   multiSigWalletAddress,
   chainId,
 }: {
-  signer: Wallet;
-  erc20Address: string;
-  amount: number;
-  decimal: number;
   to: string;
   checkOwner: string;
   checkNonce: string;
@@ -49,7 +41,7 @@ export async function signERC20TransferCheck({
   //     checkNonce: checkNonce,
   //   }); //checkNonce)
 
-  var msgHash = ethers.utils.keccak256(
+  var msgHash_1 = ethers.utils.keccak256(
     ethers.utils.defaultAbiCoder.encode(
       [
         "bytes32",
@@ -86,14 +78,14 @@ export async function signERC20TransferCheck({
     chainId,
     multiSigWalletAddress
   );
-  msgHash = ethers.utils.keccak256(
+  const msgHash_2 = ethers.utils.arrayify(ethers.utils.keccak256(
     ethers.utils.solidityPack(
       ["bytes1", "bytes1", "bytes32", "bytes32"],
-      ["0x19", "0x01", domainSeparator, msgHash]
+      ["0x19", "0x01", domainSeparator, msgHash_1]
     )
-  );
+  ));
 
-  return { msgHash, data };
+  return { msgHash:msgHash_2, data };
 }
 
 export async function checkNonceGenerator({
