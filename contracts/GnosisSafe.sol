@@ -12,6 +12,7 @@ import "./common/SecuredTokenTransfer.sol";
 import "./common/StorageAccessible.sol";
 import "./interfaces/ISignatureValidator.sol";
 import "./external/GnosisSafeMath.sol";
+import "hardhat/console.sol";
 
 /// @title Gnosis Safe - A multisignature wallet with support for confirmations using signed messages based on ERC191.
 /// @author Stefan George - <stefan@gnosis.io>
@@ -226,6 +227,7 @@ contract GnosisSafe is
         uint256 _threshold = threshold;
         // Check that a threshold is set
         require(_threshold > 0, "GS001");
+
         checkNSignatures(dataHash, data, signatures, _threshold);
     }
 
@@ -253,6 +255,10 @@ contract GnosisSafe is
         uint256 i;
         for (i = 0; i < requiredSignatures; i++) {
             (v, r, s) = signatureSplit(signatures, i);
+            console.logUint(v);
+            console.logBytes32(r);
+            console.logBytes32(s);
+
             if (v == 0) {
                 // If v is 0 then it is a contract signature
                 // When handling contract signatures the address of the contract is encoded into r
@@ -296,7 +302,16 @@ contract GnosisSafe is
                 // Default is the ecrecover flow with the provided data hash
                 // Use ecrecover with the messageHash for EOA signatures
                 currentOwner = ecrecover(dataHash, v, r, s);
+                console.logString("dataHash");
+                console.logBytes32(dataHash);
+                console.logString("currentOwner");
+                console.logAddress(currentOwner);
             }
+            // console.logAddress(currentOwner);
+            // console.logAddress(lastOwner);
+            // console.logAddress(owners[currentOwner]);
+            // console.logAddress(SENTINEL_OWNERS);
+
             require(currentOwner > lastOwner && owners[currentOwner] != address(0) && currentOwner != SENTINEL_OWNERS, "GS026");
             lastOwner = currentOwner;
         }
