@@ -37,6 +37,7 @@ export interface MultiSigWalletInterface extends utils.Interface {
     "changeThreshold(uint256)": FunctionFragment;
     "checkNSignatures(bytes32,bytes,bytes,uint256)": FunctionFragment;
     "checkSignatures(bytes32,bytes,bytes)": FunctionFragment;
+    "checkValidity(bytes)": FunctionFragment;
     "disableModule(address,address)": FunctionFragment;
     "domainSeparator()": FunctionFragment;
     "enableModule(address)": FunctionFragment;
@@ -74,6 +75,7 @@ export interface MultiSigWalletInterface extends utils.Interface {
       | "changeThreshold"
       | "checkNSignatures"
       | "checkSignatures"
+      | "checkValidity"
       | "disableModule"
       | "domainSeparator"
       | "enableModule"
@@ -135,6 +137,10 @@ export interface MultiSigWalletInterface extends utils.Interface {
       PromiseOrValue<BytesLike>,
       PromiseOrValue<BytesLike>
     ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "checkValidity",
+    values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "disableModule",
@@ -335,6 +341,10 @@ export interface MultiSigWalletInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "checkSignatures",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "checkValidity",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -705,6 +715,11 @@ export interface MultiSigWallet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[void]>;
 
+    checkValidity(
+      checkMsg: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     disableModule(
       prevModule: PromiseOrValue<string>,
       module: PromiseOrValue<string>,
@@ -921,6 +936,11 @@ export interface MultiSigWallet extends BaseContract {
     overrides?: CallOverrides
   ): Promise<void>;
 
+  checkValidity(
+    checkMsg: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   disableModule(
     prevModule: PromiseOrValue<string>,
     module: PromiseOrValue<string>,
@@ -1136,6 +1156,11 @@ export interface MultiSigWallet extends BaseContract {
       signatures: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    checkValidity(
+      checkMsg: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     disableModule(
       prevModule: PromiseOrValue<string>,
@@ -1479,6 +1504,11 @@ export interface MultiSigWallet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    checkValidity(
+      checkMsg: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     disableModule(
       prevModule: PromiseOrValue<string>,
       module: PromiseOrValue<string>,
@@ -1693,6 +1723,11 @@ export interface MultiSigWallet extends BaseContract {
       dataHash: PromiseOrValue<BytesLike>,
       data: PromiseOrValue<BytesLike>,
       signatures: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    checkValidity(
+      checkMsg: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

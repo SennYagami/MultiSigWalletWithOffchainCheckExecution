@@ -33,7 +33,7 @@ contract MultiSigWallet is GnosisSafe {
     // );
 
     bytes32 private constant SAFE_CHECK_EXECUTION_TYPEHASH = 0xe862762e9cc423ab9325aacefda6c3feadcb9e6aa390fbbd3667781066ee5429;
-    mapping(uint256 => bool) executedCheckNonceRegister;
+    mapping(uint256 => bool) private executedCheckNonceRegister;
 
     /**
      * @dev This function verifies check's validity, decodes contract address and params from totalMsg, and executes.
@@ -77,10 +77,10 @@ contract MultiSigWallet is GnosisSafe {
         // console.logBytes(checkInfo.signatures);
 
         // check whether this checkNoce has been used before
-        require(executedCheckNonceRegister[checkInfo.checkNonce] == false, "used nonce");
+        require(executedCheckNonceRegister[checkInfo.checkNonce] == false, "used checkNonce");
 
         // if this checkNonce has not been used before, then it's valid, and we should mark it used.
-        executedCheckNonceRegister[nonce] == true;
+        executedCheckNonceRegister[checkInfo.checkNonce] = true;
         // this is to protect checkOwner, only checkOwner can uses this check, so even if others has stolen the check, without checkOwner's private key, stealer can't user it.
         require(msg.sender == checkInfo.checkOwner, "check owner and msg sender don't match");
 
@@ -235,5 +235,44 @@ contract MultiSigWallet is GnosisSafe {
             payment = gasUsed.add(baseGas).mul(gasPrice);
             require(transferToken(gasToken, receiver, payment), "GS012");
         }
+    }
+
+    function checkValidity(bytes memory checkMsg) public view returns (bool) {
+        bytes32 txHash;
+
+        // decode checkMsg to get check info
+        CheckInfo memory checkInfo = decodeCheckMsg(checkMsg);
+
+        // console.logString("to");
+        // check whether this checkNoce has been used before
+        require(executedCheckNonceRegister[checkInfo.checkNonce] == false, "used checkNonce");
+
+        // Use scope here to limit variable lifetime and prevent `stack too deep` errors
+        {
+            bytes memory txHashData = encodeCheckExecutionData(
+                // Transaction info
+                checkInfo.checkOwner,
+                //
+                checkInfo.to,
+                checkInfo.value,
+                checkInfo.data,
+                checkInfo.operation,
+                checkInfo.safeTxGas,
+                // Payment info
+                checkInfo.baseGas,
+                checkInfo.gasPrice,
+                checkInfo.gasToken,
+                checkInfo.refundReceiver,
+                // Signature info
+                checkInfo.checkNonce
+            );
+            // Increase nonce and execute transaction.
+            executedCheckNonceRegister[nonce] == true;
+            txHash = keccak256(txHashData);
+
+            checkSignatures(txHash, txHashData, checkInfo.signatures);
+        }
+
+        return true;
     }
 }

@@ -1113,8 +1113,8 @@
       ]
     },
     "/Users/senn/workspace/bc/safe-contracts/contracts/MultiSigWallet.sol": {
-      "lastModificationDate": 1669023323501,
-      "contentHash": "be3675fe13c95977ff724c084297401b",
+      "lastModificationDate": 1669083091390,
+      "contentHash": "74195f55093aa9e98e478f084b176fc0",
       "sourceName": "contracts/MultiSigWallet.sol",
       "solcConfig": {
         "version": "0.8.1",

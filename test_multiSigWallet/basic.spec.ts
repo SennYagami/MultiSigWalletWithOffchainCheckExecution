@@ -79,20 +79,14 @@ describe("platformWallet basic test", function () {
   });
 
   describe("sign off chain check to transfer erc20_1", function () {
+    var checkNonce;
+    var checkMsg;
     this.beforeAll(async function () {
       // transfer 10k erc20_1 to multiSigWallet
       await erc20_1
         .connect(erc20Creator)
         .transfer(multiSigWallet.address, 10000);
-    });
 
-    it("verify multiSigWallet erc20_1 balance", async function () {
-      const tokenAmount = await erc20_1.balanceOf(multiSigWallet.address);
-
-      expect(tokenAmount).to.equal(10000);
-    });
-
-    it("use offChain check to transfer erc20_1", async function () {
       const checkOwner = accepter.address;
       const accepterAddress = accepter.address;
       // external contract address to be called
@@ -116,7 +110,7 @@ describe("platformWallet basic test", function () {
         amount,
       ]);
 
-      const checkNonce = await checkNonceGenerator({
+      checkNonce = await checkNonceGenerator({
         checkOwner: checkOwner,
         to: to,
         erc20Address: erc20_1.address,
@@ -158,7 +152,7 @@ describe("platformWallet basic test", function () {
       );
 
       // construct checkInfo
-      const checkMsg = ethers.utils.defaultAbiCoder.encode(
+      checkMsg = ethers.utils.defaultAbiCoder.encode(
         [
           "tuple(address to, address checkOwner, uint256 value, bytes data, uint256 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, uint256 gasToken, address payable refundReceiver, uint256 checkNonce, bytes signatures)",
         ],
@@ -197,14 +191,28 @@ describe("platformWallet basic test", function () {
       //   console.log(BigNumber.from(checkNonce));
 
       const res = await multiSigWallet.connect(accepter).executeCheck(checkMsg);
+    });
 
-      const newBalanceOfTo = await erc20_1.balanceOf(accepterAddress);
+    it("check remain erc20_1 amount after transaction", async function () {
+      const newBalanceOfTo = await erc20_1.balanceOf(accepter.address);
       const newBalanceOfMultiSigWallet = await erc20_1.balanceOf(
         multiSigWallet.address
       );
 
       expect(newBalanceOfTo).to.equal(4000);
       expect(newBalanceOfMultiSigWallet).to.equal(6000);
+    });
+
+    it("after checkExecution, check check's validity", async function () {
+      expect(multiSigWallet.checkValidity(checkMsg)).to.be.revertedWith(
+        "used checkNonce"
+      );
+    });
+
+    it("after check's execution, use check again, contract should revert ", async function () {
+      expect(
+        multiSigWallet.connect(accepter).executeCheck(checkMsg)
+      ).to.be.revertedWith("used checkNonce");
     });
   });
 });
