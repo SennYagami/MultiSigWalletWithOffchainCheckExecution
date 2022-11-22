@@ -19,7 +19,7 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: { allowUnlimitedContractSize: true },
     goerli: {
-      url: `https://eth-goerli.g.alchemy.com/v2/Zf0Pex_0WB4BkhBQCA14wnt4u6PAi6UF`,
+      url: process.env.ALCHEMY_API,
       accounts: [process.env.PRIVATE_KEY as any],
       allowUnlimitedContractSize: true,
     },

@@ -84,7 +84,6 @@ describe("platformWallet basic test", function () {
       await erc20_1
         .connect(erc20Creator)
         .transfer(multiSigWallet.address, 10000);
-
     });
 
     it("verify multiSigWallet erc20_1 balance", async function () {
@@ -112,9 +111,11 @@ describe("platformWallet basic test", function () {
       //   construct call data of inline assembly
       let ABI = ["function transfer(address to, uint256 amount)"];
       let iface = new ethers.utils.Interface(ABI);
-      const data = iface.encodeFunctionData("transfer", [accepterAddress, amount ]);
+      const data = iface.encodeFunctionData("transfer", [
+        accepterAddress,
+        amount,
+      ]);
 
-      
       const checkNonce = await checkNonceGenerator({
         checkOwner: checkOwner,
         to: to,
@@ -142,9 +143,12 @@ describe("platformWallet basic test", function () {
         // {bytes32 r}{bytes32 s}{uint8 v}
         // Compact means, uint8 is not padded to 32 bytes.
         var compactSig = await signer.signMessage(msgHash);
-    
-        
-        compactSig = compactSig.slice(0,compactSig.length-2) +( compactSig.slice(compactSig.length-2,compactSig.length)=='1b' ? '1f' :'20')
+
+        compactSig =
+          compactSig.slice(0, compactSig.length - 2) +
+          (compactSig.slice(compactSig.length - 2, compactSig.length) == "1b"
+            ? "1f"
+            : "20");
         compactSigLs.push(compactSig);
       }
 
@@ -195,7 +199,9 @@ describe("platformWallet basic test", function () {
       const res = await multiSigWallet.connect(accepter).executeCheck(checkMsg);
 
       const newBalanceOfTo = await erc20_1.balanceOf(accepterAddress);
-      const newBalanceOfMultiSigWallet = await erc20_1.balanceOf(multiSigWallet.address);
+      const newBalanceOfMultiSigWallet = await erc20_1.balanceOf(
+        multiSigWallet.address
+      );
 
       expect(newBalanceOfTo).to.equal(4000);
       expect(newBalanceOfMultiSigWallet).to.equal(6000);
