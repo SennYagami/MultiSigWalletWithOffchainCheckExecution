@@ -12,8 +12,9 @@ contract MultiSigWallet is GnosisSafe {
 
     struct CheckInfo {
         // Transaction info
-        address to;
+        bool callExternalContract;
         address checkOwner;
+        address to;
         uint256 value;
         bytes data;
         Enum.Operation operation;
@@ -23,6 +24,10 @@ contract MultiSigWallet is GnosisSafe {
         uint256 gasPrice;
         address gasToken;
         address payable refundReceiver;
+        // transfer etherInfo
+        bool transferEther;
+        address payable etherReceiver;
+        uint256 etherAmount;
         // Signature info
         uint256 checkNonce;
         bytes signatures;
@@ -47,34 +52,43 @@ contract MultiSigWallet is GnosisSafe {
         // decode checkMsg to get check info
         CheckInfo memory checkInfo = decodeCheckMsg(checkMsg);
 
-        // console.logString("to");
-        // console.logAddress(checkInfo.to);
-        // console.logString("checkOwner");
-        // console.logAddress(checkInfo.checkOwner);
-        // console.logString("value");
-        // console.logUint(checkInfo.value);
-        // console.logString("data");
-        // console.logBytes(checkInfo.data);
-        // console.logString("operation comparation res");
-        // if (checkInfo.operation == Enum.Operation.Call) {
-        //     console.log(0);
-        // } else {
-        //     console.log(1);
-        // }
-        // console.logString("safeTxGas----------------------");
-        // console.logUint(checkInfo.safeTxGas);
-        // console.logString("baseGas----------------------");
-        // console.logUint(checkInfo.baseGas);
-        // console.logString("gasPrice----------------------");
-        // console.logUint(checkInfo.gasPrice);
-        // console.logString("gasToken----------------------");
-        // console.logAddress(checkInfo.gasToken);
-        // console.logString("refundReceiver----------------------");
-        // console.logAddress(checkInfo.refundReceiver);
-        // console.logString("checkNonce----------------------");
-        // console.logUint(checkInfo.checkNonce);
-        // console.logString("signature----------------------");
-        // console.logBytes(checkInfo.signatures);
+        console.logString("callExternalContract");
+        console.logBool(checkInfo.callExternalContract);
+        console.logString("to");
+        console.logAddress(checkInfo.to);
+        console.logString("checkOwner");
+        console.logAddress(checkInfo.checkOwner);
+        console.logString("value");
+        console.logUint(checkInfo.value);
+        console.logString("data");
+        console.logBytes(checkInfo.data);
+        console.logString("operation comparation res");
+        if (checkInfo.operation == Enum.Operation.Call) {
+            console.log(0);
+        } else {
+            console.log(1);
+        }
+        console.logString("safeTxGas----------------------");
+        console.logUint(checkInfo.safeTxGas);
+        console.logString("baseGas----------------------");
+        console.logUint(checkInfo.baseGas);
+        console.logString("gasPrice----------------------");
+        console.logUint(checkInfo.gasPrice);
+        console.logString("gasToken----------------------");
+        console.logAddress(checkInfo.gasToken);
+        console.logString("refundReceiver----------------------");
+        console.logAddress(checkInfo.refundReceiver);
+        console.logString("transferEther----------------------");
+        console.logBool(checkInfo.transferEther);
+        console.logString("etherReceiver----------------------");
+        console.logAddress(checkInfo.etherReceiver);
+        console.logString("etherAmount----------------------");
+        console.logUint(checkInfo.etherAmount);
+
+        console.logString("checkNonce----------------------");
+        console.logUint(checkInfo.checkNonce);
+        console.logString("signature----------------------");
+        console.logBytes(checkInfo.signatures);
 
         // check whether this checkNoce has been used before
         require(executedCheckNonceRegister[checkInfo.checkNonce] == false, "used checkNonce");
@@ -82,65 +96,38 @@ contract MultiSigWallet is GnosisSafe {
         // if this checkNonce has not been used before, then it's valid, and we should mark it used.
         executedCheckNonceRegister[checkInfo.checkNonce] = true;
         // this is to protect checkOwner, only checkOwner can uses this check, so even if others has stolen the check, without checkOwner's private key, stealer can't user it.
+
         require(msg.sender == checkInfo.checkOwner, "check owner and msg sender don't match");
 
         // Use scope here to limit variable lifetime and prevent `stack too deep` errors
         {
-            bytes memory txHashData = encodeCheckExecutionData(
-                // Transaction info
-                checkInfo.checkOwner,
-                //
-                checkInfo.to,
-                checkInfo.value,
-                checkInfo.data,
-                checkInfo.operation,
-                checkInfo.safeTxGas,
-                // Payment info
-                checkInfo.baseGas,
-                checkInfo.gasPrice,
-                checkInfo.gasToken,
-                checkInfo.refundReceiver,
-                // Signature info
-                checkInfo.checkNonce
-            );
+            bytes memory txHashData = encodeCheckExecutionData(checkInfo);
             // Increase nonce and execute transaction.
             executedCheckNonceRegister[nonce] == true;
             txHash = keccak256(txHashData);
 
             checkSignatures(txHash, txHashData, checkInfo.signatures);
         }
-        address guard = getGuard();
+
         {
-            if (guard != address(0)) {
-                Guard(guard).checkTransaction(
-                    // Transaction info
+            uint256 gasUsed = gasleft();
+            if (checkInfo.callExternalContract) {
+                // If the gasPrice is 0 we assume that nearly all available gas can be used (it is always more than safeTxGas)
+                // We only substract 2500 (compared to the 3000 before) to ensure that the amount passed is still higher than safeTxGas
+                success = execute(
                     checkInfo.to,
                     checkInfo.value,
                     checkInfo.data,
                     checkInfo.operation,
-                    checkInfo.safeTxGas,
-                    // Payment info
-                    checkInfo.baseGas,
-                    checkInfo.gasPrice,
-                    checkInfo.gasToken,
-                    checkInfo.refundReceiver,
-                    // Signature info
-                    checkInfo.signatures,
-                    msg.sender
+                    checkInfo.gasPrice == 0 ? (gasleft() - 2500) : checkInfo.safeTxGas
                 );
             }
-        }
-        {
-            uint256 gasUsed = gasleft();
-            // If the gasPrice is 0 we assume that nearly all available gas can be used (it is always more than safeTxGas)
-            // We only substract 2500 (compared to the 3000 before) to ensure that the amount passed is still higher than safeTxGas
-            success = execute(
-                checkInfo.to,
-                checkInfo.value,
-                checkInfo.data,
-                checkInfo.operation,
-                checkInfo.gasPrice == 0 ? (gasleft() - 2500) : checkInfo.safeTxGas
-            );
+
+            if (checkInfo.transferEther) {
+                require(checkInfo.etherReceiver != address(0));
+                require((checkInfo.etherReceiver).send(checkInfo.etherAmount), "transfer ether failed");
+                success = true;
+            }
 
             gasUsed = gasUsed.sub(gasleft());
             // If no safeTxGas and no gasPrice was set (e.g. both are 0), then the internal tx is required to be successful
@@ -161,61 +148,55 @@ contract MultiSigWallet is GnosisSafe {
             if (success) emit ExecuteCheckSuccess(checkInfo.checkOwner, checkInfo.to, checkInfo.value, checkInfo.data, checkInfo.operation);
             else emit ExecuteCheckFailure(checkInfo.checkOwner, checkInfo.to, checkInfo.value, checkInfo.data, checkInfo.operation);
         }
-        {
-            if (guard != address(0)) {
-                Guard(guard).checkAfterExecution(txHash, success);
-            }
-        }
     }
 
     function decodeCheckMsg(bytes memory checkMsg) private pure returns (CheckInfo memory checkInfo) {
         checkInfo = abi.decode(checkMsg, (CheckInfo));
     }
 
+    function concat(bytes memory a, bytes memory b) internal pure returns (bytes memory) {
+        return abi.encodePacked(a, b);
+    }
+
     /// @dev Returns the bytes that are hashed to be signed by owners.
-    /// @param checkOwner the owner of the check.
-    /// @param to Destination address.
-    /// @param value Ether value.
-    /// @param data Data payload.
-    /// @param operation Operation type.
-    /// @param safeTxGas Gas that should be used for the safe transaction.
-    /// @param baseGas Gas costs for that are independent of the transaction execution(e.g. base transaction fee, signature check, payment of the refund)
-    /// @param gasPrice Maximum gas price that should be used for this transaction.
-    /// @param gasToken Token address (or 0 if ETH) that is used for the payment.
-    /// @param refundReceiver Address of receiver of gas payment (or 0 if tx.origin).
-    /// @param checkNonce Check nonce.
+    /// @param checkInfo checkInfo
     /// @return Transaction hash bytes.
-    function encodeCheckExecutionData(
-        address checkOwner,
-        address to,
-        uint256 value,
-        bytes memory data,
-        Enum.Operation operation,
-        uint256 safeTxGas,
-        uint256 baseGas,
-        uint256 gasPrice,
-        address gasToken,
-        address refundReceiver,
-        uint256 checkNonce
-    ) public view returns (bytes memory) {
-        bytes32 safeCheckExecutionHash = keccak256(
-            abi.encode(
-                SAFE_CHECK_EXECUTION_TYPEHASH,
-                checkOwner,
-                to,
-                value,
-                keccak256(data),
-                operation,
-                safeTxGas,
-                baseGas,
-                gasPrice,
-                gasToken,
-                refundReceiver,
-                checkNonce
-            )
-        );
+    function encodeCheckExecutionData(CheckInfo memory checkInfo) public view returns (bytes memory) {
+        bytes32 safeCheckExecutionHash = keccak256(concat(encodeCheckExecutionData_1(checkInfo), encodeCheckExecutionData_2(checkInfo)));
 
         return abi.encodePacked(bytes1(0x19), bytes1(0x01), domainSeparator(), safeCheckExecutionHash);
+    }
+
+    // too avoid stack too deep, encode twice and concat together
+    function encodeCheckExecutionData_1(CheckInfo memory checkInfo) public pure returns (bytes memory) {
+        bytes memory e1 = abi.encode(
+            SAFE_CHECK_EXECUTION_TYPEHASH,
+            checkInfo.callExternalContract,
+            checkInfo.checkOwner,
+            checkInfo.to,
+            checkInfo.value,
+            keccak256(checkInfo.data),
+            checkInfo.operation,
+            checkInfo.safeTxGas,
+            checkInfo.baseGas
+        );
+
+        return e1;
+    }
+
+    // too avoid stack too deep, encode twice and concat together
+    function encodeCheckExecutionData_2(CheckInfo memory checkInfo) public pure returns (bytes memory) {
+        bytes memory e2 = abi.encode(
+            checkInfo.gasPrice,
+            checkInfo.gasToken,
+            checkInfo.refundReceiver,
+            checkInfo.transferEther,
+            checkInfo.etherReceiver,
+            checkInfo.etherAmount,
+            checkInfo.checkNonce
+        );
+
+        return e2;
     }
 
     function handlePaymentOfCheckExecution(
@@ -249,23 +230,7 @@ contract MultiSigWallet is GnosisSafe {
 
         // Use scope here to limit variable lifetime and prevent `stack too deep` errors
         {
-            bytes memory txHashData = encodeCheckExecutionData(
-                // Transaction info
-                checkInfo.checkOwner,
-                //
-                checkInfo.to,
-                checkInfo.value,
-                checkInfo.data,
-                checkInfo.operation,
-                checkInfo.safeTxGas,
-                // Payment info
-                checkInfo.baseGas,
-                checkInfo.gasPrice,
-                checkInfo.gasToken,
-                checkInfo.refundReceiver,
-                // Signature info
-                checkInfo.checkNonce
-            );
+            bytes memory txHashData = encodeCheckExecutionData(checkInfo);
             // Increase nonce and execute transaction.
             executedCheckNonceRegister[nonce] == true;
             txHash = keccak256(txHashData);

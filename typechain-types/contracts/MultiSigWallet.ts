@@ -28,6 +28,63 @@ import type {
   PromiseOrValue,
 } from "../common";
 
+export declare namespace MultiSigWallet {
+  export type CheckInfoStruct = {
+    callExternalContract: PromiseOrValue<boolean>;
+    checkOwner: PromiseOrValue<string>;
+    to: PromiseOrValue<string>;
+    value: PromiseOrValue<BigNumberish>;
+    data: PromiseOrValue<BytesLike>;
+    operation: PromiseOrValue<BigNumberish>;
+    safeTxGas: PromiseOrValue<BigNumberish>;
+    baseGas: PromiseOrValue<BigNumberish>;
+    gasPrice: PromiseOrValue<BigNumberish>;
+    gasToken: PromiseOrValue<string>;
+    refundReceiver: PromiseOrValue<string>;
+    transferEther: PromiseOrValue<boolean>;
+    etherReceiver: PromiseOrValue<string>;
+    etherAmount: PromiseOrValue<BigNumberish>;
+    checkNonce: PromiseOrValue<BigNumberish>;
+    signatures: PromiseOrValue<BytesLike>;
+  };
+
+  export type CheckInfoStructOutput = [
+    boolean,
+    string,
+    string,
+    BigNumber,
+    string,
+    number,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    string,
+    string,
+    boolean,
+    string,
+    BigNumber,
+    BigNumber,
+    string
+  ] & {
+    callExternalContract: boolean;
+    checkOwner: string;
+    to: string;
+    value: BigNumber;
+    data: string;
+    operation: number;
+    safeTxGas: BigNumber;
+    baseGas: BigNumber;
+    gasPrice: BigNumber;
+    gasToken: string;
+    refundReceiver: string;
+    transferEther: boolean;
+    etherReceiver: string;
+    etherAmount: BigNumber;
+    checkNonce: BigNumber;
+    signatures: string;
+  };
+}
+
 export interface MultiSigWalletInterface extends utils.Interface {
   functions: {
     "VERSION()": FunctionFragment;
@@ -41,7 +98,9 @@ export interface MultiSigWalletInterface extends utils.Interface {
     "disableModule(address,address)": FunctionFragment;
     "domainSeparator()": FunctionFragment;
     "enableModule(address)": FunctionFragment;
-    "encodeCheckExecutionData(address,address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256)": FunctionFragment;
+    "encodeCheckExecutionData((bool,address,address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,bool,address,uint256,uint256,bytes))": FunctionFragment;
+    "encodeCheckExecutionData_1((bool,address,address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,bool,address,uint256,uint256,bytes))": FunctionFragment;
+    "encodeCheckExecutionData_2((bool,address,address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,bool,address,uint256,uint256,bytes))": FunctionFragment;
     "encodeTransactionData(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256)": FunctionFragment;
     "execTransaction(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,bytes)": FunctionFragment;
     "execTransactionFromModule(address,uint256,bytes,uint8)": FunctionFragment;
@@ -80,6 +139,8 @@ export interface MultiSigWalletInterface extends utils.Interface {
       | "domainSeparator"
       | "enableModule"
       | "encodeCheckExecutionData"
+      | "encodeCheckExecutionData_1"
+      | "encodeCheckExecutionData_2"
       | "encodeTransactionData"
       | "execTransaction"
       | "execTransactionFromModule"
@@ -156,19 +217,15 @@ export interface MultiSigWalletInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "encodeCheckExecutionData",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [MultiSigWallet.CheckInfoStruct]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "encodeCheckExecutionData_1",
+    values: [MultiSigWallet.CheckInfoStruct]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "encodeCheckExecutionData_2",
+    values: [MultiSigWallet.CheckInfoStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "encodeTransactionData",
@@ -361,6 +418,14 @@ export interface MultiSigWalletInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "encodeCheckExecutionData",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "encodeCheckExecutionData_1",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "encodeCheckExecutionData_2",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -734,17 +799,17 @@ export interface MultiSigWallet extends BaseContract {
     ): Promise<ContractTransaction>;
 
     encodeCheckExecutionData(
-      checkOwner: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      operation: PromiseOrValue<BigNumberish>,
-      safeTxGas: PromiseOrValue<BigNumberish>,
-      baseGas: PromiseOrValue<BigNumberish>,
-      gasPrice: PromiseOrValue<BigNumberish>,
-      gasToken: PromiseOrValue<string>,
-      refundReceiver: PromiseOrValue<string>,
-      checkNonce: PromiseOrValue<BigNumberish>,
+      checkInfo: MultiSigWallet.CheckInfoStruct,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    encodeCheckExecutionData_1(
+      checkInfo: MultiSigWallet.CheckInfoStruct,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    encodeCheckExecutionData_2(
+      checkInfo: MultiSigWallet.CheckInfoStruct,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
@@ -955,17 +1020,17 @@ export interface MultiSigWallet extends BaseContract {
   ): Promise<ContractTransaction>;
 
   encodeCheckExecutionData(
-    checkOwner: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    value: PromiseOrValue<BigNumberish>,
-    data: PromiseOrValue<BytesLike>,
-    operation: PromiseOrValue<BigNumberish>,
-    safeTxGas: PromiseOrValue<BigNumberish>,
-    baseGas: PromiseOrValue<BigNumberish>,
-    gasPrice: PromiseOrValue<BigNumberish>,
-    gasToken: PromiseOrValue<string>,
-    refundReceiver: PromiseOrValue<string>,
-    checkNonce: PromiseOrValue<BigNumberish>,
+    checkInfo: MultiSigWallet.CheckInfoStruct,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  encodeCheckExecutionData_1(
+    checkInfo: MultiSigWallet.CheckInfoStruct,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  encodeCheckExecutionData_2(
+    checkInfo: MultiSigWallet.CheckInfoStruct,
     overrides?: CallOverrides
   ): Promise<string>;
 
@@ -1176,17 +1241,17 @@ export interface MultiSigWallet extends BaseContract {
     ): Promise<void>;
 
     encodeCheckExecutionData(
-      checkOwner: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      operation: PromiseOrValue<BigNumberish>,
-      safeTxGas: PromiseOrValue<BigNumberish>,
-      baseGas: PromiseOrValue<BigNumberish>,
-      gasPrice: PromiseOrValue<BigNumberish>,
-      gasToken: PromiseOrValue<string>,
-      refundReceiver: PromiseOrValue<string>,
-      checkNonce: PromiseOrValue<BigNumberish>,
+      checkInfo: MultiSigWallet.CheckInfoStruct,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    encodeCheckExecutionData_1(
+      checkInfo: MultiSigWallet.CheckInfoStruct,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    encodeCheckExecutionData_2(
+      checkInfo: MultiSigWallet.CheckInfoStruct,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -1523,17 +1588,17 @@ export interface MultiSigWallet extends BaseContract {
     ): Promise<BigNumber>;
 
     encodeCheckExecutionData(
-      checkOwner: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      operation: PromiseOrValue<BigNumberish>,
-      safeTxGas: PromiseOrValue<BigNumberish>,
-      baseGas: PromiseOrValue<BigNumberish>,
-      gasPrice: PromiseOrValue<BigNumberish>,
-      gasToken: PromiseOrValue<string>,
-      refundReceiver: PromiseOrValue<string>,
-      checkNonce: PromiseOrValue<BigNumberish>,
+      checkInfo: MultiSigWallet.CheckInfoStruct,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    encodeCheckExecutionData_1(
+      checkInfo: MultiSigWallet.CheckInfoStruct,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    encodeCheckExecutionData_2(
+      checkInfo: MultiSigWallet.CheckInfoStruct,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1745,17 +1810,17 @@ export interface MultiSigWallet extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     encodeCheckExecutionData(
-      checkOwner: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      operation: PromiseOrValue<BigNumberish>,
-      safeTxGas: PromiseOrValue<BigNumberish>,
-      baseGas: PromiseOrValue<BigNumberish>,
-      gasPrice: PromiseOrValue<BigNumberish>,
-      gasToken: PromiseOrValue<string>,
-      refundReceiver: PromiseOrValue<string>,
-      checkNonce: PromiseOrValue<BigNumberish>,
+      checkInfo: MultiSigWallet.CheckInfoStruct,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    encodeCheckExecutionData_1(
+      checkInfo: MultiSigWallet.CheckInfoStruct,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    encodeCheckExecutionData_2(
+      checkInfo: MultiSigWallet.CheckInfoStruct,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

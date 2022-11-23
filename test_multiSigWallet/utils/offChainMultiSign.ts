@@ -7,17 +7,39 @@ import crypto from "crypto";
 import hre from "hardhat";
 
 export async function signERC20TransferCheck({
+  callExternalContract,
   to,
   checkOwner,
+  value,
   checkNonce,
   data,
+  operation,
+  safeTxGas,
+  baseGas,
+  gasPrice,
+  gasToken,
+  refundReceiver,
+  transferEther,
+  etherReceiver,
+  etherAmount,
   multiSigWalletAddress,
   chainId,
 }: {
+  callExternalContract: boolean;
   to: string;
   checkOwner: string;
+  value: number;
   checkNonce: string;
   data: string;
+  operation: number;
+  safeTxGas: number;
+  baseGas: number;
+  gasPrice: number;
+  gasToken: string;
+  refundReceiver: string;
+  transferEther: boolean;
+  etherReceiver: string;
+  etherAmount: number;
   multiSigWalletAddress: string;
   chainId: number | undefined;
 }) {
@@ -45,6 +67,7 @@ export async function signERC20TransferCheck({
     ethers.utils.defaultAbiCoder.encode(
       [
         "bytes32",
+        "bool",
         "address",
         "address",
         "uint256",
@@ -55,20 +78,27 @@ export async function signERC20TransferCheck({
         "uint256",
         "address",
         "address",
+        "bool",
+        "address",
+        "uint256",
         "uint256",
       ],
       [
         SAFE_CHECK_EXECUTION_TYPEHASH, // SAFE_CHECK_EXECUTION_TYPEHASH
+        callExternalContract, //callExternalContract
         checkOwner, // checkOwner
         to, // to
-        0, // value
+        value, // value
         dataHash, //kaccak256(data)
-        0, //operation. 0:call; 1: delegate call
-        0, //safeTxGas
-        0, //baseGas
-        0, //gasPrice
-        ethers.constants.AddressZero, //gasToken
-        ethers.constants.AddressZero, // refundReceiver
+        operation, //operation. 0:call; 1: delegate call
+        safeTxGas, //safeTxGas
+        baseGas, //baseGas
+        gasPrice, //gasPrice
+        gasToken, //gasToken
+        refundReceiver, // refundReceiver
+        transferEther, //transferEther
+        etherReceiver, //etherReceiver
+        etherAmount, //etherAmount
         checkNonce, //checkNonce
       ]
     )
@@ -78,14 +108,16 @@ export async function signERC20TransferCheck({
     chainId,
     multiSigWalletAddress
   );
-  const msgHash_2 = ethers.utils.arrayify(ethers.utils.keccak256(
-    ethers.utils.solidityPack(
-      ["bytes1", "bytes1", "bytes32", "bytes32"],
-      ["0x19", "0x01", domainSeparator, msgHash_1]
+  const msgHash_2 = ethers.utils.arrayify(
+    ethers.utils.keccak256(
+      ethers.utils.solidityPack(
+        ["bytes1", "bytes1", "bytes32", "bytes32"],
+        ["0x19", "0x01", domainSeparator, msgHash_1]
+      )
     )
-  ));
+  );
 
-  return { msgHash:msgHash_2, data };
+  return { msgHash: msgHash_2, data };
 }
 
 export async function checkNonceGenerator({
