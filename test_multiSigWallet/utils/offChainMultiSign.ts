@@ -104,6 +104,27 @@ export async function signERC20TransferCheck({
     )
   );
 
+
+  const e2 = ethers.utils.defaultAbiCoder.encode(
+    [
+
+    //   "bool",
+      "address",
+      "uint256",
+      "uint256",
+    ],
+    [
+
+
+    //   transferEther, //transferEther
+      etherReceiver, //etherReceiver
+      etherAmount, //etherAmount
+      checkNonce, //checkNonce
+    ]
+  )
+
+
+
   const domainSeparator = await getDomainSeparator(
     chainId,
     multiSigWalletAddress

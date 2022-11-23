@@ -52,43 +52,43 @@ contract MultiSigWallet is GnosisSafe {
         // decode checkMsg to get check info
         CheckInfo memory checkInfo = decodeCheckMsg(checkMsg);
 
-        console.logString("callExternalContract");
-        console.logBool(checkInfo.callExternalContract);
-        console.logString("to");
-        console.logAddress(checkInfo.to);
-        console.logString("checkOwner");
-        console.logAddress(checkInfo.checkOwner);
-        console.logString("value");
-        console.logUint(checkInfo.value);
-        console.logString("data");
-        console.logBytes(checkInfo.data);
-        console.logString("operation comparation res");
-        if (checkInfo.operation == Enum.Operation.Call) {
-            console.log(0);
-        } else {
-            console.log(1);
-        }
-        console.logString("safeTxGas----------------------");
-        console.logUint(checkInfo.safeTxGas);
-        console.logString("baseGas----------------------");
-        console.logUint(checkInfo.baseGas);
-        console.logString("gasPrice----------------------");
-        console.logUint(checkInfo.gasPrice);
-        console.logString("gasToken----------------------");
-        console.logAddress(checkInfo.gasToken);
-        console.logString("refundReceiver----------------------");
-        console.logAddress(checkInfo.refundReceiver);
-        console.logString("transferEther----------------------");
-        console.logBool(checkInfo.transferEther);
-        console.logString("etherReceiver----------------------");
-        console.logAddress(checkInfo.etherReceiver);
-        console.logString("etherAmount----------------------");
-        console.logUint(checkInfo.etherAmount);
+        // console.logString("callExternalContract");
+        // console.logBool(checkInfo.callExternalContract);
+        // console.logString("to");
+        // console.logAddress(checkInfo.to);
+        // console.logString("checkOwner");
+        // console.logAddress(checkInfo.checkOwner);
+        // console.logString("value");
+        // console.logUint(checkInfo.value);
+        // console.logString("data");
+        // console.logBytes(checkInfo.data);
+        // console.logString("operation comparation res");
+        // if (checkInfo.operation == Enum.Operation.Call) {
+        //     console.log(0);
+        // } else {
+        //     console.log(1);
+        // }
+        // console.logString("safeTxGas----------------------");
+        // console.logUint(checkInfo.safeTxGas);
+        // console.logString("baseGas----------------------");
+        // console.logUint(checkInfo.baseGas);
+        // console.logString("gasPrice----------------------");
+        // console.logUint(checkInfo.gasPrice);
+        // console.logString("gasToken----------------------");
+        // console.logAddress(checkInfo.gasToken);
+        // console.logString("refundReceiver----------------------");
+        // console.logAddress(checkInfo.refundReceiver);
+        // console.logString("transferEther----------------------");
+        // console.logBool(checkInfo.transferEther);
+        // console.logString("etherReceiver----------------------");
+        // console.logAddress(checkInfo.etherReceiver);
+        // console.logString("etherAmount----------------------");
+        // console.logUint(checkInfo.etherAmount);
 
-        console.logString("checkNonce----------------------");
-        console.logUint(checkInfo.checkNonce);
-        console.logString("signature----------------------");
-        console.logBytes(checkInfo.signatures);
+        // console.logString("checkNonce----------------------");
+        // console.logUint(checkInfo.checkNonce);
+        // console.logString("signature----------------------");
+        // console.logBytes(checkInfo.signatures);
 
         // check whether this checkNoce has been used before
         require(executedCheckNonceRegister[checkInfo.checkNonce] == false, "used checkNonce");
@@ -125,7 +125,8 @@ contract MultiSigWallet is GnosisSafe {
 
             if (checkInfo.transferEther) {
                 require(checkInfo.etherReceiver != address(0));
-                require((checkInfo.etherReceiver).send(checkInfo.etherAmount), "transfer ether failed");
+                require((payable(checkInfo.etherReceiver)).send(checkInfo.etherAmount), "transfer ether failed");
+
                 success = true;
             }
 
