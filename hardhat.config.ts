@@ -12,25 +12,26 @@ const config: HardhatUserConfig = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 100,
+        runs: 1000000,
       },
     },
   },
   networks: {
-    hardhat: { allowUnlimitedContractSize: true },
+    // hardhat: { allowUnlimitedContractSize: true },
     goerli: {
       url: process.env.ALCHEMY_API,
       accounts: [process.env.PRIVATE_KEY as any],
-      allowUnlimitedContractSize: true,
+    //   gas: 1000000
+    //   allowUnlimitedContractSize: true,
     },
   },
-  //   gasReporter: {
-  //     outputFile: "gas-report.txt",
-  //     enabled: true,
-  //     currency: "USD",
-  //     noColors: true,
-  //     coinmarketcap: process.env.COIN_MARKETCAP_API_KEY || "",
-  //     token: "ETH",
-  //   },
+    gasReporter: {
+      outputFile: "gas-report.txt",
+      enabled: true,
+      currency: "USD",
+      noColors: true,
+      coinmarketcap: process.env.COIN_MARKETCAP_API_KEY || "",
+      token: "ETH",
+    },
 };
 export default config;
