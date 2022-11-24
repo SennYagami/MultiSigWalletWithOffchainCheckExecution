@@ -97,93 +97,188 @@ describe("platformWallet basic test", function () {
 
   describe("multiSigWallet interacts checkExecutor", async function () {
     describe("multiSigWallet transfer ether to checkExecutor", async function () {
-      var params: multiSigWalletParams;
-      var aggregatedSig;
-      this.beforeAll(async function () {
-        // transfer ether from multiSigWallet to checkExecutor
-        const to = checkExecutor.address;
-        const value = ethers.utils.parseEther("100");
-        const data = "0x00";
-        const operation = 0;
-        const safeTxGas = 0;
-        const baseGas = 0;
-        const gasPrice = 0;
-        const gasToken = ethers.constants.AddressZero;
-        const refundReceiver = ethers.constants.AddressZero;
-        const nonce = 0;
-        const chainId = hre.network.config.chainId;
-        const multiSigWalletAddress = multiSigWallet.address;
+        var params: multiSigWalletParams;
+        var aggregatedSig;
+        this.beforeAll(async function () {
+              // transfer ether from multiSigWallet to checkExecutor
+              const to = checkExecutor.address;
+              const value = ethers.utils.parseEther("100");
+              const data = "0x00";
+              const operation = 0;
+              const safeTxGas = 0;
+              const baseGas = 0;
+              const gasPrice = 0;
+              const gasToken = ethers.constants.AddressZero;
+              const refundReceiver = ethers.constants.AddressZero;
+              const currentNonce = await multiSigWallet.nonce()
+              const nonce = currentNonce.toNumber();
+              const chainId = hre.network.config.chainId;
+              const multiSigWalletAddress = multiSigWallet.address;
+      
+              if (chainId == undefined) {
+                process.exit(0);
+              }
+      
+              params = {
+                to,
+                value,
+                operation,
+                safeTxGas,
+                baseGas,
+                gasPrice,
+                gasToken,
+                refundReceiver,
+                nonce,
+                data,
+                chainId,
+                multiSigWalletAddress,
+              };
+      
+              const { msgHash } = await multiSigWalletMsgHashGenerator({ params });
+      
+              const signerLs = addressSorter([owner1, owner2, owner3]);
+              aggregatedSig = await signMsgHash({ msgHash, signerLs });
+      
+              const res = await multiSigWallet
+                .connect(owner1)
+                .execTransaction(
+                  params.to,
+                  params.value,
+                  params.data,
+                  params.operation,
+                  params.safeTxGas,
+                  params.baseGas,
+                  params.gasPrice,
+                  params.gasToken,
+                  params.refundReceiver,
+                  aggregatedSig
+                );
+      
+              // transfer erc20 from multiSigWallet to checkExecutor
+      
+          
+        })
+          it("check ether after check execution", async function () {
+            const balanceOfCheckExectutorAfterCheckExecution =
+              await ethers.provider.getBalance(checkExecutor.address);
+    
+            expect(balanceOfCheckExectutorAfterCheckExecution).to.equal(
+              ethers.utils.parseEther("100")
+            );
+          });
+    
+          it("after check's execution, use check again, contract should revert ", async function () {
+            expect(
+              multiSigWallet
+                .connect(owner1)
+                .execTransaction(
+                  params.to,
+                  params.value,
+                  params.data,
+                  params.operation,
+                  params.safeTxGas,
+                  params.baseGas,
+                  params.gasPrice,
+                  params.gasToken,
+                  params.refundReceiver,
+                  aggregatedSig
+                )
+            ).to.be.revertedWith("GS026");
+            // });
+          });
 
-        if (chainId == undefined) {
-          process.exit(0);
-        }
-
-        params = {
-          to,
-          value,
-          operation,
-          safeTxGas,
-          baseGas,
-          gasPrice,
-          gasToken,
-          refundReceiver,
-          nonce,
-          data,
-          chainId,
-          multiSigWalletAddress,
-        };
-
-        const { msgHash } = await multiSigWalletMsgHashGenerator({ params });
-
-        const signerLs = addressSorter([owner1, owner2, owner3]);
-        aggregatedSig = await signMsgHash({ msgHash, signerLs });
-
-        const res = await multiSigWallet
-          .connect(owner1)
-          .execTransaction(
-            params.to,
-            params.value,
-            params.data,
-            params.operation,
-            params.safeTxGas,
-            params.baseGas,
-            params.gasPrice,
-            params.gasToken,
-            params.refundReceiver,
-            aggregatedSig
-          );
-
-        // transfer erc20 from multiSigWallet to checkExecutor
-      });
-
-      it("check ether after check execution", async function () {
-        const balanceOfCheckExectutorAfterCheckExecution =
-          await ethers.provider.getBalance(checkExecutor.address);
-
-        expect(balanceOfCheckExectutorAfterCheckExecution).to.equal(
-          ethers.utils.parseEther("100")
-        );
-      });
-
-      it("after check's execution, use check again, contract should revert ", async function () {
-        expect(
-          multiSigWallet
-            .connect(owner1)
-            .execTransaction(
-              params.to,
-              params.value,
-              params.data,
-              params.operation,
-              params.safeTxGas,
-              params.baseGas,
-              params.gasPrice,
-              params.gasToken,
-              params.refundReceiver,
-              aggregatedSig
-            )
-        ).to.be.revertedWith("GS026");
-        // });
-      });
+          describe('checkExecutor transfer ether to accepter', async function () {
+            var checkMsg;
+                this.beforeAll(async function () {
+                  const checkOwner = accepter.address;
+          
+                  // external contract address to be called
+                  const to = accepter.address;
+          
+                  // transfer ether no need data
+                  const data = "0x00";
+                  const value: BigNumber = ethers.utils.parseEther("1");
+                  const operation = 0;
+                  const safeTxGas = 0;
+                  const baseGas = 0;
+                  const gasPrice = 0;
+                  const gasToken = ethers.constants.AddressZero;
+                  const refundReceiver = ethers.constants.AddressZero;
+          
+                  const chainId = hre.network.config.chainId;
+                  const multiSigWalletAddress = multiSigWallet.address;
+                  const checkExecutorAddress = checkExecutor.address;
+          
+                  if (chainId == undefined) {
+                    throw "undefined chainId";
+                  }
+                  const params = {
+                    to,
+                    checkOwner,
+                    value,
+                    operation,
+                    safeTxGas,
+                    baseGas,
+                    gasPrice,
+                    gasToken,
+                    refundReceiver,
+                    multiSigWalletAddress,
+                    chainId,
+                    checkExecutorAddress,
+                    data,
+                  };
+          
+                  const checkNonce = await checkNonceGenerator({
+                    params,
+                  });
+          
+                  const { msgHash } = await executorMsgHashGenerator({
+                    params, //not used here because data is ''
+                    checkNonce,
+                  });
+          
+                  const signerLs = addressSorter([owner1, owner2, owner3]);
+                  const aggregatedSig = await signMsgHash({ msgHash, signerLs });
+          
+                  const checkMsg = await generateCheckMsg({
+                    params,
+                    checkNonce,
+                    data,
+                    aggregatedSig,
+                  });
+          
+                  const res = await checkExecutor.connect(accepter).executeCheck(checkMsg);
+                });
+          
+                it("check ether after check execution", async function () {
+                  const balanceOfAccepterAfterCheckExecution =
+                    await ethers.provider.getBalance(accepter.address);
+                  const balanceOfCheckExecutorAfterCheckExecution =
+                    await ethers.provider.getBalance(checkExecutor.address);
+          
+                  //   console.log({
+                  //     balanceOfAccepterAfterCheckExecution: ethers.utils.formatEther(
+                  //       balanceOfAccepterAfterCheckExecution
+                  //     ),
+                  //   });
+          
+                  expect(balanceOfCheckExecutorAfterCheckExecution).to.equal(
+                    ethers.utils.parseEther("99")
+                  );
+                });
+          
+                it("after checkExecution, check check's validity", async function () {
+                  expect(checkExecutor.checkValidity(checkMsg)).to.be.revertedWith("C200");
+                });
+          
+                it("after check's execution, use check again, contract should revert ", async function () {
+                  expect(
+                    checkExecutor.connect(accepter).executeCheck(checkMsg)
+                  ).to.be.revertedWith("C200");
+                  // });
+                });
+          })
+     
     });
     describe("multiSigWallet transfer erc20 to checkExecutor", async function () {
       var params: multiSigWalletParams;
@@ -205,7 +300,8 @@ describe("platformWallet basic test", function () {
         const gasPrice = 0;
         const gasToken = ethers.constants.AddressZero;
         const refundReceiver = ethers.constants.AddressZero;
-        const nonce = 1;
+        const currentNonce = await multiSigWallet.nonce()
+        const nonce = currentNonce.toNumber();
         const chainId = hre.network.config.chainId;
         const multiSigWalletAddress = multiSigWallet.address;
 
@@ -277,200 +373,108 @@ describe("platformWallet basic test", function () {
         ).to.be.revertedWith("GS026");
         // });
       });
+
+      describe('checkExecutor transfer erc20_1 to accepter', async function() {
+        var checkMsg;
+        this.beforeAll(async function () {
+            const checkOwner = accepter.address;
+    
+            
+        
+       
+    
+            // construct call data of inline assembly, this 'to' is not identical to 'to' in params. The former is external contract address, the latter is param in transfer function, the target to transfer ERC20
+            let ABI = ["function transfer(address to, uint256 amount)"];
+            let iface = new ethers.utils.Interface(ABI);
+            const data = iface.encodeFunctionData("transfer", [
+            accepter.address,
+            3000,
+            ]);
+    
+            const value: BigNumber = ethers.utils.parseEther("0");
+            const to= erc20_1.address
+            const operation = 0;
+            const safeTxGas = 0;
+            const baseGas = 0;
+            const gasPrice = 0;
+            const gasToken = ethers.constants.AddressZero;
+            const refundReceiver = ethers.constants.AddressZero;
+    
+            const chainId = hre.network.config.chainId;
+            const multiSigWalletAddress = multiSigWallet.address;
+            const checkExecutorAddress = checkExecutor.address;
+    
+            if (chainId == undefined) {
+            throw "undefined chainId";
+            }
+            const params = {
+            to,
+            checkOwner,
+            value,
+            operation,
+            safeTxGas,
+            baseGas,
+            gasPrice,
+            gasToken,
+            refundReceiver,
+            multiSigWalletAddress,
+            chainId,
+            checkExecutorAddress,
+            data,
+            };
+    
+            const checkNonce = await checkNonceGenerator({
+            params,
+            });
+    
+            const { msgHash } = await executorMsgHashGenerator({
+            params, //not used here because data is ''
+            checkNonce,
+            });
+    
+            const signerLs = addressSorter([owner1, owner2, owner3]);
+            const aggregatedSig = await signMsgHash({ msgHash, signerLs });
+    
+            checkMsg = await generateCheckMsg({
+            params,
+            checkNonce,
+            data,
+            aggregatedSig,
+            });
+    
+            const res = await checkExecutor.connect(accepter).executeCheck(checkMsg);
+        });
+      
+        it("check remain erc20_1 amount after transaction", async function () {
+            const newBalanceOfTo = await erc20_1.balanceOf(accepter.address);
+            const newBalanceOfCheckExecutor = await erc20_1.balanceOf(
+            checkExecutor.address
+            );
+    
+            expect(newBalanceOfTo).to.equal(3000);
+            expect(newBalanceOfCheckExecutor).to.equal(1000);
+        });
+    
+        it("after checkExecution, check check's validity", async function () {
+            expect(checkExecutor.checkValidity(checkMsg)).to.be.revertedWith("C200");
+        });
+    
+        it("after check's execution, use check again, contract should revert ", async function () {
+            expect(
+            checkExecutor.connect(accepter).executeCheck(checkMsg)
+            ).to.be.revertedWith("C200");
+        });
+        it("after check's execution, checkExecutor's ether is not moved", async function () {
+            const etherBalanceOfCheckExecutor = await ethers.provider.getBalance(
+            checkExecutor.address
+            );
+            expect(etherBalanceOfCheckExecutor).to.equal(
+            ethers.utils.parseEther("99")
+            );
+        });
+        });
+      
+      })
     });
-  });
 
-  //   describe("sign off chain check to transfer ether", async function () {
-  //     var checkMsg;
-  //     this.beforeAll(async function () {
-  //       const checkOwner = accepter.address;
-
-  //       // external contract address to be called
-  //       const to = accepter.address;
-
-  //       // transfer ether no need data
-  //       const data = "0x00";
-  //       const value: BigNumber = ethers.utils.parseEther("1");
-  //       const operation = 0;
-  //       const safeTxGas = 0;
-  //       const baseGas = 0;
-  //       const gasPrice = 0;
-  //       const gasToken = ethers.constants.AddressZero;
-  //       const refundReceiver = ethers.constants.AddressZero;
-
-  //       const chainId = hre.network.config.chainId;
-  //       const multiSigWalletAddress = multiSigWallet.address;
-  //       const checkExecutorAddress = checkExecutor.address;
-
-  //       if (chainId == undefined) {
-  //         throw "undefined chainId";
-  //       }
-  //       const params = {
-  //         to,
-  //         checkOwner,
-  //         value,
-  //         operation,
-  //         safeTxGas,
-  //         baseGas,
-  //         gasPrice,
-  //         gasToken,
-  //         refundReceiver,
-  //         multiSigWalletAddress,
-  //         chainId,
-  //         checkExecutorAddress,
-  //         data,
-  //       };
-
-  //       const checkNonce = await checkNonceGenerator({
-  //         params,
-  //       });
-
-  //       const { msgHash } = await executorMsgHashGenerator({
-  //         params, //not used here because data is ''
-  //         checkNonce,
-  //       });
-
-  //       const signerLs = addressSorter([owner1, owner2, owner3]);
-  //       const aggregatedSig = await signMsgHash({ msgHash, signerLs });
-
-  //       const checkMsg = await generateCheckMsg({
-  //         params,
-  //         checkNonce,
-  //         data,
-  //         aggregatedSig,
-  //       });
-
-  //       const res = await checkExecutor.connect(accepter).executeCheck(checkMsg);
-  //     });
-
-  //     it("check ether after check execution", async function () {
-  //       const balanceOfAccepterAfterCheckExecution =
-  //         await ethers.provider.getBalance(accepter.address);
-  //       const balanceOfCheckExecutorAfterCheckExecution =
-  //         await ethers.provider.getBalance(checkExecutor.address);
-
-  //       //   console.log({
-  //       //     balanceOfAccepterAfterCheckExecution: ethers.utils.formatEther(
-  //       //       balanceOfAccepterAfterCheckExecution
-  //       //     ),
-  //       //   });
-
-  //       expect(balanceOfCheckExecutorAfterCheckExecution).to.equal(
-  //         ethers.utils.parseEther("9999")
-  //       );
-  //     });
-
-  //     it("after checkExecution, check check's validity", async function () {
-  //       expect(checkExecutor.checkValidity(checkMsg)).to.be.revertedWith("C200");
-  //     });
-
-  //     it("after check's execution, use check again, contract should revert ", async function () {
-  //       expect(
-  //         checkExecutor.connect(accepter).executeCheck(checkMsg)
-  //       ).to.be.revertedWith("C200");
-  //       // });
-  //     });
-  //   });
-
-  //   describe("sign off chain check to transfer erc20_1", function () {
-  //     var checkMsg;
-  //     this.beforeAll(async function () {
-  //       const checkOwner = accepter.address;
-
-  //       // external contract address to be called
-  //       const to = erc20_1.address;
-  //       await erc20_1
-  //         .connect(erc20Creator)
-  //         .transfer(checkExecutor.address, 10000);
-
-  //       // construct call data of inline assembly, this 'to' is not identical to 'to' in params. The former is external contract address, the latter is param in transfer function, the target to transfer ERC20
-  //       let ABI = ["function transfer(address to, uint256 amount)"];
-  //       let iface = new ethers.utils.Interface(ABI);
-  //       const data = iface.encodeFunctionData("transfer", [
-  //         accepter.address,
-  //         4000,
-  //       ]);
-
-  //       const value: BigNumber = ethers.utils.parseEther("0");
-  //       const operation = 0;
-  //       const safeTxGas = 0;
-  //       const baseGas = 0;
-  //       const gasPrice = 0;
-  //       const gasToken = ethers.constants.AddressZero;
-  //       const refundReceiver = ethers.constants.AddressZero;
-
-  //       const chainId = hre.network.config.chainId;
-  //       const multiSigWalletAddress = multiSigWallet.address;
-  //       const checkExecutorAddress = checkExecutor.address;
-
-  //       if (chainId == undefined) {
-  //         throw "undefined chainId";
-  //       }
-  //       const params = {
-  //         to,
-  //         checkOwner,
-  //         value,
-  //         operation,
-  //         safeTxGas,
-  //         baseGas,
-  //         gasPrice,
-  //         gasToken,
-  //         refundReceiver,
-  //         multiSigWalletAddress,
-  //         chainId,
-  //         checkExecutorAddress,
-  //         data,
-  //       };
-
-  //       const checkNonce = await checkNonceGenerator({
-  //         params,
-  //       });
-
-  //       const { msgHash } = await executorMsgHashGenerator({
-  //         params, //not used here because data is ''
-  //         checkNonce,
-  //       });
-
-  //       const signerLs = addressSorter([owner1, owner2, owner3]);
-  //       const aggregatedSig = await signMsgHash({ msgHash, signerLs });
-
-  //       checkMsg = await generateCheckMsg({
-  //         params,
-  //         checkNonce,
-  //         data,
-  //         aggregatedSig,
-  //       });
-
-  //       const res = await checkExecutor.connect(accepter).executeCheck(checkMsg);
-  //     });
-
-  //     it("check remain erc20_1 amount after transaction", async function () {
-  //       const newBalanceOfTo = await erc20_1.balanceOf(accepter.address);
-  //       const newBalanceOfCheckExecutor = await erc20_1.balanceOf(
-  //         checkExecutor.address
-  //       );
-
-  //       expect(newBalanceOfTo).to.equal(4000);
-  //       expect(newBalanceOfCheckExecutor).to.equal(6000);
-  //     });
-
-  //     it("after checkExecution, check check's validity", async function () {
-  //       expect(checkExecutor.checkValidity(checkMsg)).to.be.revertedWith("C200");
-  //     });
-
-  //     it("after check's execution, use check again, contract should revert ", async function () {
-  //       expect(
-  //         checkExecutor.connect(accepter).executeCheck(checkMsg)
-  //       ).to.be.revertedWith("C200");
-  //     });
-  //   });
-
-  //   it("after check's execution, checkExecutor's ether is not moved", async function () {
-  //     const etherBalanceOfCheckExecutor = await ethers.provider.getBalance(
-  //       checkExecutor.address
-  //     );
-  //     expect(etherBalanceOfCheckExecutor).to.equal(
-  //       ethers.utils.parseEther("9999")
-  //     );
-  //   });
 });
