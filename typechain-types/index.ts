@@ -30,6 +30,8 @@ export type { ModuleManager } from "./contracts/base/ModuleManager";
 export { ModuleManager__factory } from "./factories/contracts/base/ModuleManager__factory";
 export type { OwnerManager } from "./contracts/base/OwnerManager";
 export { OwnerManager__factory } from "./factories/contracts/base/OwnerManager__factory";
+export type { CheckExecutor } from "./contracts/CheckExecutor";
+export { CheckExecutor__factory } from "./factories/contracts/CheckExecutor__factory";
 export type { EtherPaymentFallback } from "./contracts/common/EtherPaymentFallback";
 export { EtherPaymentFallback__factory } from "./factories/contracts/common/EtherPaymentFallback__factory";
 export type { StorageAccessible } from "./contracts/common/StorageAccessible";
@@ -58,6 +60,8 @@ export type { ERC777TokensRecipient } from "./contracts/interfaces/ERC777TokensR
 export { ERC777TokensRecipient__factory } from "./factories/contracts/interfaces/ERC777TokensRecipient__factory";
 export type { IERC165 } from "./contracts/interfaces/IERC165";
 export { IERC165__factory } from "./factories/contracts/interfaces/IERC165__factory";
+export type { IGnosisSafe } from "./contracts/interfaces/IGnosisSafe";
+export { IGnosisSafe__factory } from "./factories/contracts/interfaces/IGnosisSafe__factory";
 export type { ISignatureValidator } from "./contracts/interfaces/ISignatureValidator";
 export { ISignatureValidator__factory } from "./factories/contracts/interfaces/ISignatureValidator__factory";
 export type { ViewStorageAccessible } from "./contracts/interfaces/ViewStorageAccessible";
@@ -70,8 +74,6 @@ export type { MultiSendCallOnly } from "./contracts/libraries/MultiSendCallOnly"
 export { MultiSendCallOnly__factory } from "./factories/contracts/libraries/MultiSendCallOnly__factory";
 export type { SignMessageLib } from "./contracts/libraries/SignMessageLib";
 export { SignMessageLib__factory } from "./factories/contracts/libraries/SignMessageLib__factory";
-export type { MultiSigWallet } from "./contracts/MultiSigWallet";
-export { MultiSigWallet__factory } from "./factories/contracts/MultiSigWallet__factory";
 export type { GnosisSafeProxy } from "./contracts/proxies/GnosisSafeProxy.sol/GnosisSafeProxy";
 export { GnosisSafeProxy__factory } from "./factories/contracts/proxies/GnosisSafeProxy.sol/GnosisSafeProxy__factory";
 export type { IProxy } from "./contracts/proxies/GnosisSafeProxy.sol/IProxy";

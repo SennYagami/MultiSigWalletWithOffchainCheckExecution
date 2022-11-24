@@ -19,6 +19,6 @@ import type * as proxies from "./proxies";
 export type { proxies };
 import type * as test from "./test";
 export type { test };
+export type { CheckExecutor } from "./CheckExecutor";
 export type { GnosisSafe } from "./GnosisSafe";
 export type { GnosisSafeL2 } from "./GnosisSafeL2";
-export type { MultiSigWallet } from "./MultiSigWallet";

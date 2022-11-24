@@ -12,7 +12,6 @@ import "./common/SecuredTokenTransfer.sol";
 import "./common/StorageAccessible.sol";
 import "./interfaces/ISignatureValidator.sol";
 import "./external/GnosisSafeMath.sol";
-import "hardhat/console.sol";
 
 /// @title Gnosis Safe - A multisignature wallet with support for confirmations using signed messages based on ERC191.
 /// @author Stefan George - <stefan@gnosis.io>
@@ -61,7 +60,7 @@ contract GnosisSafe is
         // By setting the threshold it is not possible to call setup anymore,
         // so we create a Safe with 0 owners and threshold 1.
         // This is an unusable Safe, perfect for the singleton
-        // threshold = 1;
+        threshold = 0;
     }
 
     /// @dev Setup function sets initial storage of contract.
@@ -227,7 +226,6 @@ contract GnosisSafe is
         uint256 _threshold = threshold;
         // Check that a threshold is set
         require(_threshold > 0, "GS001");
-
         checkNSignatures(dataHash, data, signatures, _threshold);
     }
 
@@ -255,10 +253,6 @@ contract GnosisSafe is
         uint256 i;
         for (i = 0; i < requiredSignatures; i++) {
             (v, r, s) = signatureSplit(signatures, i);
-            // console.logUint(v);
-            // console.logBytes32(r);
-            // console.logBytes32(s);
-
             if (v == 0) {
                 // If v is 0 then it is a contract signature
                 // When handling contract signatures the address of the contract is encoded into r
@@ -298,16 +292,11 @@ contract GnosisSafe is
                 // If v > 30 then default va (27,28) has been adjusted for eth_sign flow
                 // To support eth_sign and similar we adjust v and hash the messageHash with the Ethereum message prefix before applying ecrecover
                 currentOwner = ecrecover(keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", dataHash)), v - 4, r, s);
-                // console.logString("dataHash");
-                // console.logBytes32(dataHash);
-                // console.logString("currentOwner");
-                // console.logAddress(currentOwner);
             } else {
                 // Default is the ecrecover flow with the provided data hash
                 // Use ecrecover with the messageHash for EOA signatures
                 currentOwner = ecrecover(dataHash, v, r, s);
             }
-
             require(currentOwner > lastOwner && owners[currentOwner] != address(0) && currentOwner != SENTINEL_OWNERS, "GS026");
             lastOwner = currentOwner;
         }
