@@ -10,6 +10,6 @@ export * as interfaces from "./interfaces";
 export * as libraries from "./libraries";
 export * as proxies from "./proxies";
 export * as test from "./test";
+export { CheckExecutor__factory } from "./CheckExecutor__factory";
 export { GnosisSafe__factory } from "./GnosisSafe__factory";
 export { GnosisSafeL2__factory } from "./GnosisSafeL2__factory";
-export { MultiSigWallet__factory } from "./MultiSigWallet__factory";

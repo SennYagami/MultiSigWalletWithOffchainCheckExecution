@@ -7,7 +7,8 @@ const config: HardhatUserConfig = {
     compilers: [
       { version: "0.6.12" },
       { version: "0.5.17" },
-      { version: "0.8.1" },
+      { version: "0.7.6" },
+      //   { version: "0.8.1" },
     ],
     settings: {
       optimizer: {
@@ -17,21 +18,21 @@ const config: HardhatUserConfig = {
     },
   },
   networks: {
-    // hardhat: { allowUnlimitedContractSize: true },
+    hardhat: { allowUnlimitedContractSize: true },
     goerli: {
       url: process.env.ALCHEMY_API,
       accounts: [process.env.PRIVATE_KEY as any],
-    //   gas: 1000000
-    //   allowUnlimitedContractSize: true,
+      //   gas: 1000000
+      //   allowUnlimitedContractSize: true,
     },
   },
-    gasReporter: {
-      outputFile: "gas-report.txt",
-      enabled: true,
-      currency: "USD",
-      noColors: true,
-      coinmarketcap: process.env.COIN_MARKETCAP_API_KEY || "",
-      token: "ETH",
-    },
+  //   gasReporter: {
+  //     outputFile: "gas-report.txt",
+  //     enabled: true,
+  //     currency: "USD",
+  //     noColors: true,
+  //     coinmarketcap: process.env.COIN_MARKETCAP_API_KEY || "",
+  //     token: "ETH",
+  //   },
 };
 export default config;

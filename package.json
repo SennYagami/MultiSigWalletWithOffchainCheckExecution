@@ -31,10 +31,13 @@
   },
   "dependencies": {
     "@gnosis.pm/mock-contract": "^4.0.0",
+    "@gnosis.pm/safe-singleton-factory": "^1.0.11",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@openzeppelin/contracts": "^3.4.0",
     "bignumber.js": "^9.1.0",
     "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
+    "hardhat-deploy": "^0.11.20",
     "hardhat-gas-reporter": "^1.0.9",
     "install": "^0.13.0",
     "lodash": "^4.17.21"

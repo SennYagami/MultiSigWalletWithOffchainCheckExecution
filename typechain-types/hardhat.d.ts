@@ -57,6 +57,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.OwnerManager__factory>;
     getContractFactory(
+      name: "CheckExecutor",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CheckExecutor__factory>;
+    getContractFactory(
       name: "EtherPaymentFallback",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.EtherPaymentFallback__factory>;
@@ -113,6 +117,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
+      name: "IGnosisSafe",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IGnosisSafe__factory>;
+    getContractFactory(
       name: "ISignatureValidator",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ISignatureValidator__factory>;
@@ -136,10 +144,6 @@ declare module "hardhat/types/runtime" {
       name: "SignMessageLib",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SignMessageLib__factory>;
-    getContractFactory(
-      name: "MultiSigWallet",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.MultiSigWallet__factory>;
     getContractFactory(
       name: "GnosisSafeProxy",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -229,6 +233,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.OwnerManager>;
     getContractAt(
+      name: "CheckExecutor",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CheckExecutor>;
+    getContractAt(
       name: "EtherPaymentFallback",
       address: string,
       signer?: ethers.Signer
@@ -299,6 +308,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
     getContractAt(
+      name: "IGnosisSafe",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IGnosisSafe>;
+    getContractAt(
       name: "ISignatureValidator",
       address: string,
       signer?: ethers.Signer
@@ -328,11 +342,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.SignMessageLib>;
-    getContractAt(
-      name: "MultiSigWallet",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.MultiSigWallet>;
     getContractAt(
       name: "GnosisSafeProxy",
       address: string,
