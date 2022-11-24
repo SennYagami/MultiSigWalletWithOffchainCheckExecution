@@ -8,7 +8,7 @@ async function main() {
     console.log("Account balance:", (await deployer.getBalance()).toString());
   
     const MultiContractWalletContract = await hre.ethers.getContractFactory("MultiSigWallet");
-    const multiContractWallet = await MultiContractWalletContract.deploy({gasPrice: 50000000000});
+    const multiContractWallet = await MultiContractWalletContract.deploy({gasPrice: 50000000000,gasLimit: 40000000});
   
     console.log("multiContractWallet address:", multiContractWallet.address);
   }
