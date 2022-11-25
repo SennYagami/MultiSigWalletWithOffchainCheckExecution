@@ -77,8 +77,6 @@ export interface CheckExecutorInterface extends utils.Interface {
     "checkValidity(bytes)": FunctionFragment;
     "domainSeparator()": FunctionFragment;
     "encodeCheckExecutionData((address,address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256,bytes))": FunctionFragment;
-    "encodeCheckExecutionData_1((address,address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256,bytes))": FunctionFragment;
-    "encodeCheckExecutionData_2((address,address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256,bytes))": FunctionFragment;
     "executeCheck(bytes)": FunctionFragment;
     "getChainId()": FunctionFragment;
   };
@@ -88,8 +86,6 @@ export interface CheckExecutorInterface extends utils.Interface {
       | "checkValidity"
       | "domainSeparator"
       | "encodeCheckExecutionData"
-      | "encodeCheckExecutionData_1"
-      | "encodeCheckExecutionData_2"
       | "executeCheck"
       | "getChainId"
   ): FunctionFragment;
@@ -104,14 +100,6 @@ export interface CheckExecutorInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "encodeCheckExecutionData",
-    values: [CheckExecutor.CheckInfoStruct]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "encodeCheckExecutionData_1",
-    values: [CheckExecutor.CheckInfoStruct]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "encodeCheckExecutionData_2",
     values: [CheckExecutor.CheckInfoStruct]
   ): string;
   encodeFunctionData(
@@ -133,14 +121,6 @@ export interface CheckExecutorInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "encodeCheckExecutionData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "encodeCheckExecutionData_1",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "encodeCheckExecutionData_2",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -227,16 +207,6 @@ export interface CheckExecutor extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    encodeCheckExecutionData_1(
-      checkInfo: CheckExecutor.CheckInfoStruct,
-      overrides?: CallOverrides
-    ): Promise<[string] & { e1: string }>;
-
-    encodeCheckExecutionData_2(
-      checkInfo: CheckExecutor.CheckInfoStruct,
-      overrides?: CallOverrides
-    ): Promise<[string] & { e2: string }>;
-
     executeCheck(
       checkMsg: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -257,16 +227,6 @@ export interface CheckExecutor extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  encodeCheckExecutionData_1(
-    checkInfo: CheckExecutor.CheckInfoStruct,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  encodeCheckExecutionData_2(
-    checkInfo: CheckExecutor.CheckInfoStruct,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
   executeCheck(
     checkMsg: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -283,16 +243,6 @@ export interface CheckExecutor extends BaseContract {
     domainSeparator(overrides?: CallOverrides): Promise<string>;
 
     encodeCheckExecutionData(
-      checkInfo: CheckExecutor.CheckInfoStruct,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    encodeCheckExecutionData_1(
-      checkInfo: CheckExecutor.CheckInfoStruct,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    encodeCheckExecutionData_2(
       checkInfo: CheckExecutor.CheckInfoStruct,
       overrides?: CallOverrides
     ): Promise<string>;
@@ -350,16 +300,6 @@ export interface CheckExecutor extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    encodeCheckExecutionData_1(
-      checkInfo: CheckExecutor.CheckInfoStruct,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    encodeCheckExecutionData_2(
-      checkInfo: CheckExecutor.CheckInfoStruct,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     executeCheck(
       checkMsg: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -377,16 +317,6 @@ export interface CheckExecutor extends BaseContract {
     domainSeparator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     encodeCheckExecutionData(
-      checkInfo: CheckExecutor.CheckInfoStruct,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    encodeCheckExecutionData_1(
-      checkInfo: CheckExecutor.CheckInfoStruct,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    encodeCheckExecutionData_2(
       checkInfo: CheckExecutor.CheckInfoStruct,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
