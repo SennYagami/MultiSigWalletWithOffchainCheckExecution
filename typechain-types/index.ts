@@ -46,8 +46,6 @@ export type { Migration } from "./contracts/examples/libraries/Migrate_1_3_0_to_
 export { Migration__factory } from "./factories/contracts/examples/libraries/Migrate_1_3_0_to_1_2_0.sol/Migration__factory";
 export type { GnosisSafe } from "./contracts/GnosisSafe";
 export { GnosisSafe__factory } from "./factories/contracts/GnosisSafe__factory";
-export type { GnosisSafeL2 } from "./contracts/GnosisSafeL2";
-export { GnosisSafeL2__factory } from "./factories/contracts/GnosisSafeL2__factory";
 export type { CompatibilityFallbackHandler } from "./contracts/handler/CompatibilityFallbackHandler";
 export { CompatibilityFallbackHandler__factory } from "./factories/contracts/handler/CompatibilityFallbackHandler__factory";
 export type { DefaultCallbackHandler } from "./contracts/handler/DefaultCallbackHandler";

@@ -24,7 +24,7 @@ contract SimulateTxAccessor is Executor {
         Enum.Operation operation
     )
         external
-        onlyDelegateCall()
+        onlyDelegateCall
         returns (
             uint256 estimate,
             bool success,

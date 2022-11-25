@@ -20,9 +20,16 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: { allowUnlimitedContractSize: true },
     goerli: {
+      chainId: 5,
       url: process.env.ALCHEMY_API,
-      accounts: [process.env.PRIVATE_KEY as any],
-      //   gas: 1000000
+      accounts: [
+        process.env.DEPLOYER as string,
+        process.env.MULTISIGWALLETOWNER1 as string,
+        process.env.MULTISIGWALLETOWNER2 as string,
+        process.env.MULTISIGWALLETOWNER3 as string,
+        process.env.ACCEPTER as string,
+      ],
+      gas: 10000000,
       //   allowUnlimitedContractSize: true,
     },
   },
