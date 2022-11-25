@@ -176,7 +176,23 @@ contract CheckExecutor is Executor, SecuredTokenTransfer {
     /// @param checkInfo checkInfo
     /// @return Transaction hash bytes.
     function encodeCheckExecutionData(CheckInfo memory checkInfo) public view returns (bytes memory) {
-        bytes32 safeCheckExecutionHash = keccak256(concat(encodeCheckExecutionData_1(checkInfo), encodeCheckExecutionData_2(checkInfo)));
+        // bytes32 safeCheckExecutionHash = keccak256(concat(encodeCheckExecutionData_1(checkInfo), encodeCheckExecutionData_2(checkInfo)));
+        bytes32 safeCheckExecutionHash = keccak256(
+            abi.encode(
+                SAFE_CHECK_EXECUTION_TYPEHASH,
+                checkInfo.checkOwner,
+                checkInfo.to,
+                checkInfo.value,
+                keccak256(checkInfo.data),
+                checkInfo.operation,
+                checkInfo.safeTxGas,
+                checkInfo.baseGas,
+                checkInfo.gasPrice,
+                checkInfo.gasToken,
+                checkInfo.refundReceiver,
+                checkInfo.checkNonce
+            )
+        );
 
         return abi.encodePacked(bytes1(0x19), bytes1(0x01), domainSeparator(), safeCheckExecutionHash);
     }

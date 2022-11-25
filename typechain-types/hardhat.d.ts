@@ -89,10 +89,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.GnosisSafe__factory>;
     getContractFactory(
-      name: "GnosisSafeL2",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.GnosisSafeL2__factory>;
-    getContractFactory(
       name: "CompatibilityFallbackHandler",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.CompatibilityFallbackHandler__factory>;
@@ -272,11 +268,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.GnosisSafe>;
-    getContractAt(
-      name: "GnosisSafeL2",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.GnosisSafeL2>;
     getContractAt(
       name: "CompatibilityFallbackHandler",
       address: string,
